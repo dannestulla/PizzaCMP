@@ -1,0 +1,108 @@
+[versions]
+agp = "8.2.2"
+android-compileSdk = "34"
+android-minSdk = "24"
+android-targetSdk = "34"
+androidx-activityCompose = "1.9.1"
+androidx-appcompat = "1.7.0"
+androidx-core-ktx = "1.13.1"
+androidx-espresso-core = "3.6.1"
+androidx-material = "1.12.0"
+androidx-test-junit = "1.2.1"
+androidx-viewmodel = "2.8.4"
+kotlin = "2.0.0"
+ktor = "2.3.12"
+koin = "3.5.3"
+sqlDelight = "2.0.2"
+datetime = "0.6.0"
+androidx-lifecycle = "2.8.0"
+navigation = "2.7.0-alpha07"
+compose-multiplatform = "1.6.11"
+serialization = "1.7.1"
+coil3 = "3.0.0-alpha06"
+datastore = "1.1.1"
+uiTextGoogleFonts = "1.6.8"
+kottie = "1.9.6"
+turbine = "0.7.0"
+mockkery = "2.2.0"
+junitVersion = "4.13.2"
+jupiter = "5.10.1"
+rules = "1.6.1"
+
+
+[plugins]
+androidApplication = { id = "com.android.application", version.ref = "agp" }
+androidLibrary = { id = "com.android.library", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
+jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
+mockkery = { id = "dev.mokkery", version.ref = "mockkery" }
+
+[libraries]
+# GENERAL
+datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "datetime" }
+navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+datastore = { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
+datastore-preferences = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore" }
+kottie = { group = "io.github.ismai117", name = "kottie", version.ref = "kottie" }
+test-rule = { group = "androidx.test", name = "rules", version.ref = "rules" }
+
+# TEST
+turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+ktest-base = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
+ktest-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
+ktest-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlin" }
+ktest-jupiter = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
+ktest-api = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+
+# COIL
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coil3" }
+coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref = "coil3" }
+coil-network-ktor = { module = "io.coil-kt.coil3:coil-network-ktor", version.ref = "coil3" }
+coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+
+# SQL DELIGHT
+sqldelight-android-driver = { module = "app.cash.sqldelight:android-driver", version.ref = "sqlDelight" }
+sqldelight-native-driver = { module = "app.cash.sqldelight:native-driver", version.ref = "sqlDelight" }
+sqldelight-coroutines-extensions = { module = "app.cash.sqldelight:coroutines-extensions", version.ref = "sqlDelight" }
+sqldelight-runtime = { module = "app.cash.sqldelight:runtime", version.ref = "sqlDelight" }
+
+# ANDROID
+androidx-test-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-junit" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
+androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
+androidx-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "androidx-viewmodel" }
+androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
+androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidx-lifecycle" }
+
+# KTOR
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-client-auth = { module = "io.ktor:ktor-client-auth", version.ref = "ktor" }
+ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
+ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
+
+# KOIN
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
+androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
+junit = { group = "junit", name = "junit", version.ref = "junitVersion" }
+
+[bundles]
+ktor = [
+    "ktor-client-core",
+    "ktor-client-content-negotiation",
+    "ktor-cio",
+    "ktor-client-auth",
+    "ktor-client-logging",
+    "ktor-serialization-kotlinx-json",
+]
