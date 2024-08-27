@@ -10,14 +10,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import br.gohan.pizzacmp.DataStoreManager
 import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.examples.screens.LoadingScreen
 import br.gohan.pizzacmp.presenter.components.CardProduct
-import presentation.model.PizzaProductUi
+import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 import presentation.ProductsViewModel
+import presentation.model.PizzaProductUi
 
 @Composable
 fun ProductsScreen(
@@ -25,8 +27,10 @@ fun ProductsScreen(
     currentSearch: String?,
     dataStore: DataStoreManager,
     viewModel: ProductsViewModel = koinInject(),
-    action: (PizzaProductUi) -> Unit
+    navigateToProduct: () -> Unit
 ) {
+    val coroutine = rememberCoroutineScope()
+
     val products by viewModel.state.collectAsState()
     if (products.products == null) {
         LoadingScreen()
@@ -35,9 +39,13 @@ fun ProductsScreen(
         ProductsScreenStateless(
             paddingValues,
             products.products,
-            currentSearch,
-            action
-        )
+            currentSearch
+        ) {
+            coroutine.launch {
+                dataStore.cacheProduct(it)
+            }
+            navigateToProduct()
+        }
     }
 }
 
@@ -47,7 +55,7 @@ fun ProductsScreenStateless(
     paddingValues: PaddingValues,
     products: List<PizzaProductUi>? = null,
     currentSearch: String?,
-    action: (PizzaProductUi) -> Unit
+    selectedPizza: (PizzaProductUi) -> Unit
 ) {
     if (products == null) {
         LoadingScreen()
@@ -68,7 +76,7 @@ fun ProductsScreenStateless(
         } ?: products
         items(filteredProducts.size) { index ->
             CardProduct(filteredProducts[index]) {
-                action(it)
+                selectedPizza(it)
             }
         }
     }

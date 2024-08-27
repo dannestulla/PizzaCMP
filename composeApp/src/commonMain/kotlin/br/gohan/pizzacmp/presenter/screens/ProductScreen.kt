@@ -13,8 +13,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -23,26 +26,32 @@ import androidx.compose.ui.unit.dp
 import br.gohan.pizzacmp.DataStoreManager
 import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.examples.screens.LoadingScreen
-import br.gohan.pizzacmp.presenter.actions.ProductAction
 import br.gohan.pizzacmp.presenter.components.ButtonPrimary
 import br.gohan.pizzacmp.presenter.components.ImageLoader
 import br.gohan.pizzacmp.presenter.components.RowInfo
 import br.gohan.pizzacmp.presenter.components.SizeSelector
 import domain.toCurrency
-import org.koin.compose.koinInject
-import org.koin.core.parameter.parametersOf
-import presentation.ProductViewModel
+import kotlinx.coroutines.launch
 import presentation.model.PizzaProductUi
 
 @Composable
 fun ProductScreen(
     paddingValues: PaddingValues,
-    pizzaProductUi: PizzaProductUi? = null
+    dataStore: DataStoreManager
 ) {
-    if (pizzaProductUi == null) {
+    val coroutine = rememberCoroutineScope()
+
+    var product by remember { mutableStateOf<PizzaProductUi?>(null) }
+
+    coroutine.launch {
+        product = dataStore.retrieveProduct()
+    }
+
+    if (product == null) {
         LoadingScreen()
     } else {
-        ProductScreenStateless(paddingValues, pizzaProductUi) {
+        ProductScreenStateless(paddingValues, product!!) {
+
         }
     }
 }
@@ -51,15 +60,22 @@ fun ProductScreen(
 fun ProductScreenStateless(
     paddingValues: PaddingValues,
     product: PizzaProductUi,
-    action: (ProductAction) -> Unit
+    addProduct: (PizzaProductUi) -> Unit
 ) {
     val scrollState = rememberScrollState()
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .padding(paddingValues)
             .background(MaterialTheme.colorScheme.surfaceContainer).verticalScroll(scrollState)
+            .padding(
+                PaddingValues(
+                    start = 0.dp,
+                    end = 0.dp,
+                    top = paddingValues.calculateTopPadding(),
+                    bottom = paddingValues.calculateBottomPadding()
+                )
+            )
             .fillMaxSize()
     ) {
         Spacer(modifier = Modifier.height(Dimens.paddingExtraLarge))
@@ -84,8 +100,8 @@ fun ProductScreenStateless(
         Spacer(modifier = Modifier.height(Dimens.paddingExtraHuge))
         RowInfo("Price", info = product.price.toCurrency())
         Spacer(modifier = Modifier.height(Dimens.paddingLarge))
-        ButtonPrimary(label = "Add product") {
-            action(ProductAction.Add(product))
+        ButtonPrimary(label = "Add Product") {
+            addProduct(product)
         }
     }
 }

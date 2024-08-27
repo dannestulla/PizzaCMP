@@ -11,11 +11,11 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val preferencesManager = AndroidDataStoreManager(applicationContext)
+        val dataStore = AndroidDataStoreManager(applicationContext)
         enableEdgeToEdge()
 
         setContent {
-            PizzaApp(preferencesManager)
+            PizzaApp(dataStore)
         }
     }
 }

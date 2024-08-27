@@ -1,17 +1,10 @@
 package data.local
 
-import app.cash.sqldelight.coroutines.asFlow
-import app.cash.sqldelight.coroutines.mapToList
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Clock
 import mocks.products
 import presentation.model.PizzaProductUi
 
 class LocalDataSource(
     //database: ShopSampleDatabase,
-    datastore: Datastore
 ) {
     //private val favoritesTable = database.favoritesQueries
 

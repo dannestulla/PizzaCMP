@@ -2,7 +2,6 @@ package br.gohan.pizzacmp
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -26,7 +25,7 @@ import br.gohan.pizzacmp.ui.theme.PizzaTheme
 import presentation.model.TopBarState
 
 @Composable
-fun PizzaApp(dataStoreManager: DataStoreManager) {
+fun PizzaApp(dataStore: DataStoreManager) {
     PizzaTheme {
         val navController = rememberNavController()
         val snackBar = SnackbarHostState()
@@ -104,7 +103,7 @@ fun PizzaApp(dataStoreManager: DataStoreManager) {
                         navController,
                         currentSearch,
                         topBarState,
-                        dataStoreManager,
+                        dataStore,
                         paddingPlusBorder,
                         snackBar,
                         coroutine

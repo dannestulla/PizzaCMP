@@ -7,7 +7,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
-import presentation.model.PizzaProductUi
 import presentation.model.ProductsState
 
 class ProductsViewModel(
@@ -26,16 +25,6 @@ class ProductsViewModel(
         viewModelScope.launch {
             _state.update {
                 ProductsState(repository.getProducts())
-            }
-        }
-    }
-
-    fun saveProduct(productUi: PizzaProductUi) {
-        viewModelScope.launch {
-            shopParameters.dataStoreManager.retrieveProduct()?.also {
-                productsViewModel.checkIfIsFavorite(it.title).also { isFavorite ->
-                    product = it.copy(isFavorite = isFavorite)
-                }
             }
         }
     }

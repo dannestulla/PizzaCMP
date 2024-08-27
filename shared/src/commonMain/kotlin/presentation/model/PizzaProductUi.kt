@@ -1,5 +1,8 @@
 package presentation.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PizzaProductUi(
     val image: String? = null,
     val name: String,
