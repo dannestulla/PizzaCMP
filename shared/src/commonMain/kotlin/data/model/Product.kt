@@ -2,6 +2,7 @@ package data.model
 
 import kotlinx.serialization.Serializable
 
+/*
 @Serializable
 data class Product(
     val title: String,
@@ -15,3 +16,4 @@ data class Product(
 data class Category(
     val name: String
 )
+*/

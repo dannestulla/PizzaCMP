@@ -1,7 +1,8 @@
 import br.gohan.pizzacmp.database.PizzaDatabase
-import data.ExampleRepository
-import data.ExampleRepositoryImpl
+import data.PizzaRepository
+import data.PizzaRepositoryImpl
 import data.database
+import data.local.LocalDataSource
 import data.remote.RemoteDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
@@ -16,6 +17,11 @@ import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import presentation.CheckoutViewModel
+import presentation.MapViewModel
+import presentation.ProductViewModel
+import presentation.ProductsViewModel
+import presentation.model.PizzaProductUi
 
 fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
     appDeclaration()
@@ -45,11 +51,16 @@ val api = module {
 
 val core = module {
     factory { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
-    single<ExampleRepository> { ExampleRepositoryImpl(get()) }
+    factory { CheckoutViewModel(get(), get()) }
+    factory { MapViewModel(get(), get()) }
+    //factory { (product: PizzaProductUi) -> ProductViewModel(get(), get(), product) }
+    factory { ProductsViewModel(get(), get()) }
 
-    factory { ExampleRepositoryImpl(get()) }
+    single<PizzaRepository> { PizzaRepositoryImpl(get(), get()) }
+
+    factory { PizzaRepositoryImpl(get(), get()) }
     factory { RemoteDataSource(get()) }
-    //factory { LocalDataSource(get()) }
+    factory { LocalDataSource() }
 
     single {
         PizzaDatabase(

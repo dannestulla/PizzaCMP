@@ -1,6 +1,6 @@
 package presentation
 
-import data.ExampleRepository
+import data.PizzaRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -19,12 +19,12 @@ import kotlin.test.Test
 
 class FavoritesViewModelTest {
     private lateinit var viewModel: FavoritesViewModel
-    private lateinit var repository: ExampleRepository
+    private lateinit var repository: PizzaRepository
 
     @BeforeTest
     fun setUp() {
-        repository = mock<ExampleRepository> {
-            everySuspend { getExample() } returns flowOf(favoriteFixture)
+        repository = mock<PizzaRepository> {
+            everySuspend { getProducts() } returns flowOf(favoriteFixture)
             everySuspend { removeExample(any()) } returns Unit
         }
         viewModel = FavoritesViewModel(repository, CoroutineScope(Dispatchers.Default))

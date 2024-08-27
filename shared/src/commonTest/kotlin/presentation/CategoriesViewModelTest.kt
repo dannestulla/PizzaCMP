@@ -2,7 +2,7 @@ package presentation
 
 import app.cash.turbine.test
 import categoriesMock
-import data.ExampleRepository
+import data.PizzaRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.mock
@@ -19,7 +19,7 @@ class CategoriesViewModelTest {
 
     @BeforeTest
     fun setUp() {
-        val repository = mock<ExampleRepository> {
+        val repository = mock<PizzaRepository> {
             everySuspend { getCategories() } returns categoriesMock
         }
         viewModel = CategoriesViewModel(repository, CoroutineScope(Dispatchers.Default))

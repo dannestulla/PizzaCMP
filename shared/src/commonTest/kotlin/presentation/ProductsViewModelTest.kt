@@ -1,7 +1,7 @@
 package presentation
 
 import app.cash.turbine.test
-import data.ExampleRepository
+import data.PizzaRepository
 import dev.mokkery.answering.returns
 import dev.mokkery.everySuspend
 import dev.mokkery.matcher.any
@@ -21,11 +21,11 @@ import kotlin.test.assertEquals
 
 class ProductsViewModelTest {
     private lateinit var viewModel: ProductsViewModel
-    private lateinit var repository: ExampleRepository
+    private lateinit var repository: PizzaRepository
 
     @BeforeTest
     fun setUp() {
-        repository = mock<ExampleRepository> {
+        repository = mock<PizzaRepository> {
             everySuspend { getProducts() } returns productsMock
             everySuspend { saveExample(any(), any()) } returns Unit
             everySuspend { removeExample(any()) } returns Unit

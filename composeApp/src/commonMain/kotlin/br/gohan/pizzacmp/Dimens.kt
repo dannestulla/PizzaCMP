@@ -17,10 +17,12 @@ object Dimens {
     val fontNormal = 18.sp
     val fontLarge = 20.sp
     val fontHuge = 22.sp
+    val fontHuger = 32.sp
 
     val cornerSmall = 4.dp
 
 
     val paddingFromBorder = 20.dp
+    val paddingInsideItemsSmall = 12.dp
     val paddingInsideItems = 16.dp
 }
