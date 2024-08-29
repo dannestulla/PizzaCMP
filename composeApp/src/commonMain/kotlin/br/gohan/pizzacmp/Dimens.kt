@@ -25,4 +25,6 @@ object Dimens {
     val paddingFromBorder = 20.dp
     val paddingInsideItemsSmall = 12.dp
     val paddingInsideItems = 16.dp
+    val paddingInsideLarge = 20.dp
+    val paddingInsideHuge = 32.dp
 }

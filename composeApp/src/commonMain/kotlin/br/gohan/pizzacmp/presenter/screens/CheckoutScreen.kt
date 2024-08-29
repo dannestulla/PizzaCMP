@@ -7,46 +7,56 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import br.gohan.pizzacmp.Dimens
-import br.gohan.pizzacmp.examples.screens.LoadingScreen
-import mocks.products
+import br.gohan.pizzacmp.presenter.actions.CheckoutAction
 import br.gohan.pizzacmp.presenter.components.ButtonPrimary
 import br.gohan.pizzacmp.presenter.components.CardCheckout
 import br.gohan.pizzacmp.presenter.components.RowInfo
 import br.gohan.pizzacmp.presenter.components.RowTotalQuantity
-import presentation.model.PizzaProductUi
-import br.gohan.pizzacmp.ui.theme.PizzaTheme
 import domain.toCurrency
 import org.koin.compose.koinInject
 import presentation.CheckoutViewModel
-import presentation.ProductViewModel
+import presentation.model.PizzaProductUi
 
 @Composable
 fun CheckoutScreen(
     paddingValues: PaddingValues,
-    viewModel: CheckoutViewModel = koinInject()
+    viewModel: CheckoutViewModel = koinInject(),
+    confirmOrder: () -> Unit = {}
 ) {
     val products by viewModel.state.collectAsState()
 
     if (products.products == null) {
         LoadingScreen()
     } else {
-        CheckoutScreenStateless(paddingValues, products.products!!)
+        CheckoutScreenStateless(paddingValues, products.products!!) { action ->
+            when (action) {
+                is CheckoutAction.Remove -> viewModel.deleteCheckoutItem(action.selectionUi)
+                is CheckoutAction.Toppings -> viewModel.updateToppings(action.selectionUi)
+                is CheckoutAction.Order -> {
+                    viewModel.sendOrder(action.selectionUi)
+                    confirmOrder()
+                }
+            }
+        }
     }
 }
 
 @Composable
 fun CheckoutScreenStateless(
     paddingValues: PaddingValues,
-    products: List<PizzaProductUi>
+    products: List<PizzaProductUi>,
+    action: (CheckoutAction) -> Unit
 ) {
     LazyColumn(
+        verticalArrangement = Arrangement
+            .spacedBy(Dimens.paddingInsideItemsSmall),
         modifier = Modifier
             .padding(
                 top = paddingValues.calculateTopPadding(),
@@ -55,18 +65,19 @@ fun CheckoutScreenStateless(
             .background(MaterialTheme.colorScheme.surfaceContainer)
     ) {
         items(products.size) {
-            CardCheckout(products[it])
+            CardCheckout(products[it], action)
         }
-        items(1) {
-            Spacer(modifier = Modifier.height(40.dp))
+        item {
+            HorizontalDivider()
             RowTotalQuantity(quantity = products.size.toString())
-            val totalPrice = products.sumOf { it.price }
-            RowInfo("Price", info = totalPrice.toCurrency())
-            Spacer(modifier = Modifier.height(20.dp))
-            ButtonPrimary(label = "Confirm") {
-
+            val totalPrice = products.sumOf { it.priceSelected ?: 0.0 }
+            RowInfo("Total", info = totalPrice.toCurrency())
+            Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
+            ButtonPrimary(label = "Confirm order") {
+                action(CheckoutAction.Order(products))
             }
+            Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
         }
+
     }
 }
-

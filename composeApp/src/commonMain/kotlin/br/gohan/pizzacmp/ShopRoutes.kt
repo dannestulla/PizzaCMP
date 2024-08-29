@@ -5,7 +5,7 @@ enum class PizzaRoutes {
     Products,
     Product,
     Checkout,
-    Map,
+    Deliver,
     Chat
 }
 
@@ -14,7 +14,7 @@ fun String.getRoute(): PizzaRoutes {
     return when (route) {
         "Products" -> PizzaRoutes.Products
         "Product" -> PizzaRoutes.Product
-        "Map" -> PizzaRoutes.Map
+        "Deliver" -> PizzaRoutes.Deliver
         "Checkout" -> PizzaRoutes.Checkout
         "Chat" -> PizzaRoutes.Chat
         else -> throw IllegalArgumentException("Invalid route: $this")

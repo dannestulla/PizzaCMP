@@ -1,0 +1,31 @@
+CREATE TABLE Checkout (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    image TEXT,
+    name TEXT NOT NULL,
+    description TEXT NOT NULL,
+    toppings TEXT NOT NULL, -- Armazenado como JSON
+    prices TEXT NOT NULL, -- Armazenado como JSON
+    sizeSelected TEXT NOT NULL,
+    priceSelected REAL
+);
+
+insertProduct:
+INSERT INTO Checkout (image, name, description, toppings, prices, sizeSelected, priceSelected)
+VALUES (?, ?, ?, ?, ?, ?, ?);
+
+selectAllProducts:
+SELECT * FROM Checkout;
+
+selecProductById:
+SELECT * FROM Checkout
+WHERE id = ?;
+
+updateProduct:
+UPDATE Checkout
+SET image = ?, name = ?, description = ?, toppings = ?, prices = ?, sizeSelected = ?, priceSelected = ?
+WHERE id = ?;
+
+deleteProduct:
+DELETE FROM Checkout
+WHERE name = ?;
+

@@ -14,7 +14,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import br.gohan.pizzacmp.DataStoreManager
 import br.gohan.pizzacmp.Dimens
-import br.gohan.pizzacmp.examples.screens.LoadingScreen
 import br.gohan.pizzacmp.presenter.components.CardProduct
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
@@ -29,6 +28,7 @@ fun ProductsScreen(
     viewModel: ProductsViewModel = koinInject(),
     navigateToProduct: () -> Unit
 ) {
+
     val coroutine = rememberCoroutineScope()
 
     val products by viewModel.state.collectAsState()
@@ -57,6 +57,7 @@ fun ProductsScreenStateless(
     currentSearch: String?,
     selectedPizza: (PizzaProductUi) -> Unit
 ) {
+
     if (products == null) {
         LoadingScreen()
         return

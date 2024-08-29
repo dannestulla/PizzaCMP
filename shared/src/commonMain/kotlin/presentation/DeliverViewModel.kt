@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import presentation.model.MapState
 
-class MapViewModel(
+class DeliverViewModel(
     private val repository: PizzaRepository,
     private val viewModelScope: CoroutineScope
 ) : KoinComponent {

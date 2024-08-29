@@ -3,24 +3,19 @@ package br.gohan.pizzacmp.presenter.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material.icons.filled.ShoppingCart
-import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import br.gohan.pizzacmp.PizzaRoutes
 
@@ -38,7 +33,7 @@ fun NavBar(selected: PizzaRoutes, callback: (PizzaRoutes) -> Unit) {
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primary),
 
-                selected = selected == PizzaRoutes.Products,
+                selected = selected == PizzaRoutes.Products || selected == PizzaRoutes.Product,
                 onClick = {
                     callback.invoke(PizzaRoutes.Products)
                 },
@@ -98,17 +93,17 @@ fun NavBar(selected: PizzaRoutes, callback: (PizzaRoutes) -> Unit) {
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primary),
 
-                selected = selected == PizzaRoutes.Map,
-                onClick = { callback.invoke(PizzaRoutes.Map) },
+                selected = selected == PizzaRoutes.Deliver,
+                onClick = { callback.invoke(PizzaRoutes.Deliver) },
                 label = {
                     val bold =
-                        if (selected == PizzaRoutes.Map) FontWeight.Bold else FontWeight.Normal
+                        if (selected == PizzaRoutes.Deliver) FontWeight.Bold else FontWeight.Normal
                     Text(
                         text = "Delivery", fontWeight = bold
                     )
                 },
                 icon = {
-                    if (selected == PizzaRoutes.Map) {
+                    if (selected == PizzaRoutes.Deliver) {
                         Icon(
                             imageVector = Icons.Default.Place,
                             contentDescription = "ShoppingCard Icon",

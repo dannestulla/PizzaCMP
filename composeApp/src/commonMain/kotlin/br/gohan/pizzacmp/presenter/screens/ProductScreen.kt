@@ -25,19 +25,21 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.gohan.pizzacmp.DataStoreManager
 import br.gohan.pizzacmp.Dimens
-import br.gohan.pizzacmp.examples.screens.LoadingScreen
 import br.gohan.pizzacmp.presenter.components.ButtonPrimary
 import br.gohan.pizzacmp.presenter.components.ImageLoader
 import br.gohan.pizzacmp.presenter.components.RowInfo
 import br.gohan.pizzacmp.presenter.components.SizeSelector
 import domain.toCurrency
 import kotlinx.coroutines.launch
+import org.koin.compose.koinInject
+import presentation.ProductViewModel
 import presentation.model.PizzaProductUi
 
 @Composable
 fun ProductScreen(
     paddingValues: PaddingValues,
-    dataStore: DataStoreManager
+    dataStore: DataStoreManager,
+    viewModel: ProductViewModel = koinInject()
 ) {
     val coroutine = rememberCoroutineScope()
 
@@ -51,7 +53,7 @@ fun ProductScreen(
         LoadingScreen()
     } else {
         ProductScreenStateless(paddingValues, product!!) {
-
+            viewModel.addToCheckout(it)
         }
     }
 }
@@ -63,6 +65,10 @@ fun ProductScreenStateless(
     addProduct: (PizzaProductUi) -> Unit
 ) {
     val scrollState = rememberScrollState()
+
+    var pizzaProduct by remember { mutableStateOf(product) }
+
+    var buttonEnabled by remember { mutableStateOf(true) }
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -78,31 +84,42 @@ fun ProductScreenStateless(
             )
             .fillMaxSize()
     ) {
-        Spacer(modifier = Modifier.height(Dimens.paddingExtraLarge))
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
         ImageLoader(Modifier.width(300.dp))
-        Spacer(modifier = Modifier.height(Dimens.paddingExtraLarge))
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
         Text(
-            product.name,
+            pizzaProduct.name,
             fontSize = Dimens.fontHuger,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.headlineMedium
         )
-        Spacer(modifier = Modifier.height(Dimens.paddingExtraLarge))
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
         Text(
-            product.description,
+            pizzaProduct.description,
             fontWeight = FontWeight.Medium,
             fontSize = Dimens.fontSmaller,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
-        Spacer(modifier = Modifier.height(Dimens.paddingMedium))
-        SizeSelector()
-        Spacer(modifier = Modifier.height(Dimens.paddingExtraHuge))
-        RowInfo("Price", info = product.price.toCurrency())
-        Spacer(modifier = Modifier.height(Dimens.paddingLarge))
-        ButtonPrimary(label = "Add Product") {
-            addProduct(product)
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideItemsSmall))
+        SizeSelector {
+            pizzaProduct = pizzaProduct.copy(
+                sizeSelected = it,
+                priceSelected = pizzaProduct.prices[it.ordinal]
+            )
         }
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideHuge))
+        RowInfo("Price", info = pizzaProduct.priceSelected?.toCurrency() ?: "")
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideItems))
+        ButtonPrimary(
+            enabled = buttonEnabled,
+            label = "Add Product"
+        ) {
+            addProduct(pizzaProduct)
+            buttonEnabled = false
+        }
+        Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
+
     }
 }
 

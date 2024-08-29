@@ -1,6 +1,5 @@
 package br.gohan.pizzacmp.presenter.components
 
-import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Close
@@ -13,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -81,7 +79,7 @@ fun TopBar(
                     textAlign = TextAlign.Center,
                     fontSize = Dimens.fontHuge,
                     style = TextStyle(
-                        fontFamily = MaterialTheme.typography.titleMedium.fontFamily,
+                        fontFamily = MaterialTheme.typography.headlineLarge.fontFamily,
                     ),
                 )
             }

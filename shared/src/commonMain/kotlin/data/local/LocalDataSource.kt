@@ -1,71 +1,42 @@
 package data.local
 
-import mocks.products
+import app.cash.sqldelight.coroutines.asFlow
+import app.cash.sqldelight.coroutines.mapToList
+import br.gohan.pizzacmp.database.PizzaDatabase
+import database.Checkout
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import presentation.model.PizzaProductUi
 
 class LocalDataSource(
-    //database: ShopSampleDatabase,
+    database: PizzaDatabase,
 ) {
-    //private val favoritesTable = database.favoritesQueries
+    private val checkoutQueries = database.checkoutQueries
 
-    fun getProduct(): PizzaProductUi {
-        return products.first()
+    fun getItems(): Flow<List<Checkout>> {
+        return checkoutQueries
+            .selectAllProducts()
+            .asFlow()
+            .mapToList(Dispatchers.IO)
     }
 
-    fun getCheckoutItems(): List<PizzaProductUi> {
-        return listOf(products[0], products[1])
+    fun saveItem(productUi: PizzaProductUi) {
+        checkoutQueries.insertProduct(
+            image = productUi.image,
+            name = productUi.name,
+            description = productUi.description,
+            toppings = Json.encodeToString(productUi.toppings),
+            prices = Json.encodeToString(productUi.prices),
+            priceSelected = productUi.priceSelected,
+            sizeSelected = Json.encodeToString(productUi.sizeSelected)
+        )
     }
-    /*
 
-        fun getFavoriteByTitle(title: String): Favorites? {
-            return favoritesTable.getFavoriteTitle(title).executeAsList().firstOrNull()
-        }
-
-        fun saveFavorite(product: ProductUI, discount: Double) {
-            favoritesTable.saveFavorite(
-                title = product.title,
-                newPrice = product.newPrice,
-                oldPrice = product.oldPrice,
-                description = product.description,
-                image = product.images.first(),
-                timestamp = Clock.System.now().toEpochMilliseconds(),
-                category = product.category,
-                discount = discount.toString(),
-            )
-        }
-
-        fun removeFavorite(product: ProductUI) {
-            val favorite = favoritesTable.getFavoriteTitle(product.title).executeAsList()
-            favorite.forEach {
-                favoritesTable.removeFavoriteById(it.id)
-            }
-        }
-
-        fun addToCheckout(product: ProductUI) {
-            checkoutTable.addToCheckout(
-                title = product.title,
-                price = product.newPrice,
-                oldPrice = product.oldPrice,
-                description = product.description,
-                image = product.images.firstOrNull() ?: "",
-                category = product.category,
-                timestamp = Clock.System.now().toEpochMilliseconds(),
-                sizeSelected = product.sizeSelected ?: "40"
-            )
-        }
-
-        fun getCheckoutItems(): Flow<List<Checkout>> {
-            return checkoutTable
-                .getCheckoutItems()
-                .asFlow()
-                .mapToList(Dispatchers.IO)
-        }
-
-        fun removeFromCheckout(checkoutItem: CheckoutUI) {
-            checkoutTable.getCartItemById(checkoutItem.title).executeAsList().let { product ->
-                product.forEach {
-                    checkoutTable.removeFromCheckout(it.id)
-                }
-            }
-        }*/
+    fun deleteItem(name: String) {
+        checkoutQueries.deleteProduct(name)
+    }
 }

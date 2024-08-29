@@ -2,8 +2,6 @@ package data.remote
 
 import io.ktor.client.HttpClient
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOf
 import mocks.driver
 import mocks.mapDirections
 import mocks.messages
@@ -32,12 +30,11 @@ class RemoteDataSource(
     }
 
     fun getMessages(): Flow<Message> {
-        return flow { messages }
+        return messages
     }
 
-    /*
-        suspend fun getCategories(): List<Categories> {
-            //return httpClient.get("$baseUrl/categories").body<List<Categories>>().subList(0, 5)
-            // Sublist to avoid weird categories from API
-        }*/
+    fun sendOrder(selectionUi: List<PizzaProductUi>) {
+
+    }
+
 }

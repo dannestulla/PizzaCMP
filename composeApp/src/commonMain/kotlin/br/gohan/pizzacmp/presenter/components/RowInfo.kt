@@ -25,8 +25,8 @@ fun RowInfo(title: String, info: String) {
             .height(64.dp)
             .fillMaxWidth()
             .wrapContentHeight()) {
-        Text(text = title, fontSize = Dimens.fontLarge)
+        Text(text = title, fontSize = Dimens.fontNormal)
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = info, fontSize = Dimens.fontLarge, fontWeight = FontWeight.Bold)
+        Text(text = info, fontSize = Dimens.fontNormal, fontWeight = FontWeight.Bold)
     }
 }

@@ -1,6 +1,8 @@
 package br.gohan.pizzacmp.presenter.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,56 +25,72 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import br.gohan.pizzacmp.Dimens
-import presentation.model.PizzaProductUi
+import br.gohan.pizzacmp.presenter.actions.CheckoutAction
 import domain.toCurrency
+import presentation.model.PizzaProductUi
 
 @Composable
-fun CardCheckout(selectionUi: PizzaProductUi) {
+fun CardCheckout(selectionUi: PizzaProductUi, action: (CheckoutAction) -> Unit) {
     var isToppingOptionsExpanded by remember { mutableStateOf(false) }
     val product by remember { mutableStateOf(selectionUi) }
     val toppingsSelected by remember { mutableStateOf(selectionUi.toppings.toMutableMap()) }
 
-    Column(Modifier.background(MaterialTheme.colorScheme.surfaceVariant)) {
-        Row(
-            Modifier
-                .background(MaterialTheme.colorScheme.surfaceContainer)
-                .fillMaxWidth()
-                .height(140.dp)
-                .padding(horizontal = Dimens.paddingFromBorder)
+    Card(
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
+    ) {
+        Column(
+            Modifier.background(
+                MaterialTheme.colorScheme.surfaceVariant,
+            )
         ) {
-            Card(
-                modifier = Modifier.padding(vertical = 6.dp),
-                shape = RoundedCornerShape(12.dp)
+            Spacer(modifier = Modifier.height(Dimens.paddingMedium))
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .height(140.dp)
+                    .padding(horizontal = Dimens.paddingFromBorder)
             ) {
-                ImageLoader(image = product.image)
-            }
-            Column(Modifier.padding(start = 16.dp, bottom = 6.dp, top = 6.dp)) {
-                Text(product.name, fontSize = Dimens.fontHuge)
-                Text(product.toppings.toString(), fontSize = Dimens.fontSmall)
-                Spacer(modifier = Modifier.weight(1f))
-                Row {
-                    Text(
-                        product.price.toCurrency(),
-                        fontSize = Dimens.fontLarge,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "ShoppingCard Icon",
-                        tint = MaterialTheme.colorScheme.primary
-                    )
+                Card(
+                    modifier = Modifier.padding(vertical = 6.dp),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    ImageLoader(image = product.image)
+                }
+                product.priceSelected?.let { price ->
+                    Column(Modifier.padding(start = 16.dp, bottom = 6.dp, top = 6.dp)) {
+                        Text(product.name, fontSize = Dimens.fontHuge)
+                        Spacer(Modifier.height(6.dp))
+                        Text(product.toppings.toString(), fontSize = Dimens.fontSmall)
+                        Spacer(modifier = Modifier.weight(1f))
+                        Row {
+                            Text(
+                                price.toCurrency(),
+                                fontSize = Dimens.fontNormal,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.weight(1f))
+                            Icon(
+                                modifier = Modifier.clickable {
+                                    action(CheckoutAction.Remove(selectionUi))
+                                },
+                                imageVector = Icons.Default.Delete,
+                                contentDescription = "ShoppingCard Icon",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
                 }
             }
-        }
-        Spacer(modifier = Modifier.height(Dimens.paddingMedium))
-        RowAdd(isToppingOptionsExpanded) { isExpanded ->
-            isToppingOptionsExpanded = isExpanded
-        }
-        if (isToppingOptionsExpanded) {
-            product.toppings.forEach { topping ->
-                RowQuantity(topping.toPair()) { selected ->
-                    toppingsSelected[selected.first] = selected.second
+            Spacer(modifier = Modifier.height(Dimens.paddingMedium))
+            RowMore(isToppingOptionsExpanded) { isExpanded ->
+                isToppingOptionsExpanded = isExpanded
+            }
+            if (isToppingOptionsExpanded) {
+                product.toppings.forEach { topping ->
+                    RowQuantity(topping.toPair()) { selected ->
+                        toppingsSelected[selected.first] = selected.second
+                        action(CheckoutAction.Toppings(selectionUi))
+                    }
                 }
             }
         }

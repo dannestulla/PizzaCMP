@@ -55,7 +55,7 @@ fun PizzaApp(dataStore: DataStoreManager) {
             TopBarState(
                 selectedRoute.name,
                 isSearchActive = currentSearch != null,
-                noSearch = selectedRoute == PizzaRoutes.Checkout || selectedRoute == PizzaRoutes.Map
+                noSearch = selectedRoute == PizzaRoutes.Checkout || selectedRoute == PizzaRoutes.Deliver
             )
         }
 
@@ -113,3 +113,4 @@ fun PizzaApp(dataStore: DataStoreManager) {
         }
     }
 }
+

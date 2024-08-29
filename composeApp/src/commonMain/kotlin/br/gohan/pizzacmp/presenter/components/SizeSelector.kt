@@ -16,19 +16,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import presentation.model.PizzaSize
 
 @Composable
-fun SizeSelector() {
-    var selectedOption by remember { mutableIntStateOf(0) }
+fun SizeSelector(sizes: (PizzaSize) -> Unit) {
+    var selectedOption by remember { mutableIntStateOf(1) }
 
     Row(
         modifier = Modifier.padding(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         SegmentedButton(
-            options = listOf("Opção 1", "Opção 2", "Opção 3"),
+            options = listOf(PizzaSize.Small.name, PizzaSize.Medium.name, PizzaSize.Large.name),
             selectedOption = selectedOption,
-            onOptionSelected = { selectedOption = it }
+            onOptionSelected = {
+                selectedOption = it
+                sizes(PizzaSize.entries[it])
+            }
         )
     }
 }
@@ -44,11 +48,20 @@ fun SegmentedButton(
             Button(
                 onClick = { onOptionSelected(index) },
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedOption == index) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.tertiaryContainer
+                    containerColor = if (selectedOption == index) MaterialTheme.colorScheme.tertiary else MaterialTheme.colorScheme.tertiaryContainer,
+                    contentColor = if (selectedOption == index) MaterialTheme.colorScheme.onTertiary else MaterialTheme.colorScheme.onTertiaryContainer
                 ),
                 shape = when (index) {
-                    0 -> MaterialTheme.shapes.small.copy(bottomEnd = ZeroCornerSize, topEnd = ZeroCornerSize)
-                    options.size - 1 -> MaterialTheme.shapes.small.copy(bottomStart = ZeroCornerSize, topStart = ZeroCornerSize)
+                    0 -> MaterialTheme.shapes.small.copy(
+                        bottomEnd = ZeroCornerSize,
+                        topEnd = ZeroCornerSize
+                    )
+
+                    options.size - 1 -> MaterialTheme.shapes.small.copy(
+                        bottomStart = ZeroCornerSize,
+                        topStart = ZeroCornerSize
+                    )
+
                     else -> RectangleShape
                 },
                 modifier = Modifier.weight(1f)
@@ -58,5 +71,4 @@ fun SegmentedButton(
         }
     }
 }
-
 

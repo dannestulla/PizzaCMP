@@ -1,44 +1,57 @@
 package mocks
 
+import kotlinx.coroutines.flow.flowOf
 import presentation.model.Driver
 import presentation.model.MapDirections
 import presentation.model.Message
 import presentation.model.PizzaProductUi
+import presentation.model.PizzaSize
 
 val products = listOf(
     PizzaProductUi(
-        "",
-        "Pepperoni", "Pepperoni, cheese, olives, bell peppers, and red sauce.",
-        12.32,
-        mapOf("onion" to 1, "tomato" to 2)
+        image = "",
+        name = "Pepperoni",
+        description = "Pepperoni, cheese, olives, bell peppers, and red sauce.",
+        toppings = mapOf("onion" to 1, "tomato" to 2),
+        prices = listOf(12.32, 13.50, 14.00),
+        sizeSelected = PizzaSize.Medium
     ),
     PizzaProductUi(
-        "",
-        "Margherita", "Tomato, mozzarella, basil, and olive oil.",
-        10.50,
-        mapOf("basil" to 1, "tomato" to 3)
+        image = "",
+        name = "Margherita",
+        description = "Tomato, mozzarella, basil, and olive oil.",
+        toppings = mapOf("basil" to 1, "tomato" to 3),
+        prices = listOf(10.50, 11.00, 11.50),
+        sizeSelected = PizzaSize.Medium
     ),
     PizzaProductUi(
-        "",
-        "BBQ Chicken", "Chicken, BBQ sauce, red onions, and cilantro.",
-        13.75,
-        mapOf("chicken" to 2, "onion" to 1)
+        image = "",
+        name = "BBQ Chicken",
+        description = "Chicken, BBQ sauce, red onions, and cilantro.",
+        toppings = mapOf("chicken" to 2, "onion" to 1),
+        prices = listOf(13.75, 14.25, 14.75),
+        sizeSelected = PizzaSize.Medium
     ),
     PizzaProductUi(
-        "",
-        "Hawaiian", "Ham, pineapple, cheese, and tomato sauce.",
-        11.20,
-        mapOf("ham" to 2, "pineapple" to 3)
+        image = "",
+        name = "Hawaiian",
+        description = "Ham, pineapple, cheese, and tomato sauce.",
+        toppings = mapOf("ham" to 2, "pineapple" to 3),
+        prices = listOf(11.20, 11.70, 12.20),
+        sizeSelected = PizzaSize.Medium
     ),
     PizzaProductUi(
-        "",
-        "Veggie", "Bell peppers, onions, mushrooms, olives, and tomato sauce.",
-        11.00,
-        mapOf("bell peppers" to 2, "mushrooms" to 3)
+        image = "",
+        name = "Veggie",
+        description = "Bell peppers, onions, mushrooms, olives, and tomato sauce.",
+        toppings = mapOf("bell peppers" to 2, "mushrooms" to 3),
+        prices = listOf(11.00, 11.50, 12.00),
+        sizeSelected = PizzaSize.Medium
     )
 )
 
-val messages = listOf(
+
+val messages = flowOf(
     Message.Someone("Hello, I am delivering your order", "10:10"),
     Message.Mine("Great, thank you! How long will it take?", "10:11"),
     Message.Someone("It should be there in about 20 minutes.", "10:12"),
@@ -49,7 +62,7 @@ val messages = listOf(
 
 val driver = Driver(
     "Joao Miguel",
-    "123456789"
+    "https://media.istockphoto.com/id/480750456/pt/foto/alegre-homem-de-entrega.jpg?s=1024x1024&w=is&k=20&c=uNnorOCSxcJuPIvmY0Mk1K3cCC2dl4ZBrdh0HkJro98="
 )
 
 val mapDirections = MapDirections(

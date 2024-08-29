@@ -9,6 +9,6 @@ import br.gohan.pizzacmp.ui.theme.PizzaTheme
 @Composable
 private fun PreviewSizeSelector() {
     PizzaTheme {
-        SizeSelector()
+        SizeSelector() {}
     }
 }

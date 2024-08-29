@@ -1,5 +1,6 @@
-package br.gohan.pizzacmp.examples.screens
+package br.gohan.pizzacmp.presenter.screens
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +20,7 @@ import br.gohan.pizzacmp.Dimens
 @Composable
 fun LoadingScreen(modifier: Modifier = Modifier) {
     Column(
-        modifier= modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceContainer),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
         CircularProgressIndicator(

@@ -12,8 +12,14 @@ import androidx.compose.ui.unit.sp
 import br.gohan.pizzacmp.Dimens
 
 @Composable
-fun ButtonPrimary(modifier: Modifier = Modifier, label:String, onClick: () -> Unit) {
+fun ButtonPrimary(
+    modifier: Modifier = Modifier,
+    label: String,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
     Button(
+        enabled = enabled,
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp)

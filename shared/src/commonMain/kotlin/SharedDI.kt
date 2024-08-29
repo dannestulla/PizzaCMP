@@ -17,11 +17,11 @@ import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
+import presentation.ChatViewModel
 import presentation.CheckoutViewModel
-import presentation.MapViewModel
+import presentation.DeliverViewModel
 import presentation.ProductViewModel
 import presentation.ProductsViewModel
-import presentation.model.PizzaProductUi
 
 fun initKoin(appDeclaration: KoinAppDeclaration) = startKoin {
     appDeclaration()
@@ -52,15 +52,16 @@ val api = module {
 val core = module {
     factory { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
     factory { CheckoutViewModel(get(), get()) }
-    factory { MapViewModel(get(), get()) }
-    //factory { (product: PizzaProductUi) -> ProductViewModel(get(), get(), product) }
+    factory { DeliverViewModel(get(), get()) }
+    single { ChatViewModel(get(), get()) }
     factory { ProductsViewModel(get(), get()) }
+    factory { ProductViewModel(get(), get()) }
 
     single<PizzaRepository> { PizzaRepositoryImpl(get(), get()) }
 
     factory { PizzaRepositoryImpl(get(), get()) }
     factory { RemoteDataSource(get()) }
-    factory { LocalDataSource() }
+    factory { LocalDataSource(get()) }
 
     single {
         PizzaDatabase(

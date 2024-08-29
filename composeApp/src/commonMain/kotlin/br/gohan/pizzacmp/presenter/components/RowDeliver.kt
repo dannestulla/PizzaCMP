@@ -8,9 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material3.ButtonDefaults
@@ -32,7 +33,7 @@ import br.gohan.pizzacmp.Dimens
 fun RowDeliver(image: String? = null, name: String, startChat: () -> Unit) {
     Row(
         Modifier
-            .height(64.dp)
+            .height(75.dp)
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.tertiaryContainer)
             .padding(horizontal = Dimens.paddingFromBorder),
@@ -40,8 +41,9 @@ fun RowDeliver(image: String? = null, name: String, startChat: () -> Unit) {
     ) {
         Box(
             Modifier
+                .size(60.dp)
                 .padding(vertical = 9.dp)
-                .clip(CircleShape)
+                .clip(RoundedCornerShape(10.dp))
         ) {
             ImageLoader(image = image)
         }

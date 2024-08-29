@@ -9,7 +9,7 @@ import br.gohan.pizzacmp.ui.theme.PizzaTheme
 @Composable
 private fun PreviewRowDeliver() {
     PizzaTheme {
-        RowDeliver(name = "Jose asdasdasdasdasdasdsCuervo") {
+        RowDeliver(name = "Jose") {
 
         }
     }

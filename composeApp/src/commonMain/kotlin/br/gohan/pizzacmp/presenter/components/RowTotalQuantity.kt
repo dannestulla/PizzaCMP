@@ -28,8 +28,8 @@ fun RowTotalQuantity(quantity: String) {
             .fillMaxWidth()
             .wrapContentHeight()
     ) {
-        Text(text = "Quantity", fontSize = Dimens.fontLarge)
+        Text(text = "Quantity", fontSize = Dimens.fontNormal)
         Spacer(modifier = Modifier.weight(1f))
-        Text(text = quantity, fontSize = Dimens.fontLarge, fontWeight = FontWeight.Bold)
+        Text(text = quantity, fontSize = Dimens.fontNormal, fontWeight = FontWeight.Bold)
     }
 }

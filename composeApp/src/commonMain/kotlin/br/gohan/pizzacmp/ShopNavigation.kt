@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.gohan.pizzacmp.presenter.screens.ChatScreen
 import br.gohan.pizzacmp.presenter.screens.CheckoutScreen
-import br.gohan.pizzacmp.presenter.screens.MapScreen
+import br.gohan.pizzacmp.presenter.screens.DeliverScreen
 import br.gohan.pizzacmp.presenter.screens.ProductScreen
 import br.gohan.pizzacmp.presenter.screens.ProductsScreen
 import kotlinx.coroutines.CoroutineScope
@@ -22,25 +22,29 @@ fun PizzaNavigation(
         navController = navController,
         startDestination = PizzaRoutes.Products.name
     ) {
-        composable(route = PizzaRoutes.Products.name) {
+        composable(PizzaRoutes.Products.name) {
             ProductsScreen(paddingValues, currentSearch, dataStore) {
                 navController.navigate(PizzaRoutes.Product.name)
             }
         }
         composable(
-            route = PizzaRoutes.Product.name
+            PizzaRoutes.Product.name
         ) {
             ProductScreen(paddingValues, parameters.dataStore)
         }
-        composable(route = PizzaRoutes.Checkout.name) {
-            CheckoutScreen(paddingValues)
+        composable(PizzaRoutes.Checkout.name) {
+            CheckoutScreen(paddingValues) {
+                navController.navigate(PizzaRoutes.Deliver.name)
+            }
         }
-        composable(route = PizzaRoutes.Map.name) {
-            MapScreen()
+        composable(PizzaRoutes.Deliver.name) {
+            DeliverScreen(paddingValues) {
+                navController.navigate(PizzaRoutes.Chat.name)
+            }
         }
-        composable(route = PizzaRoutes.Chat.name) {
-            ChatScreen() {
-
+        composable(PizzaRoutes.Chat.name) {
+            ChatScreen(paddingValues) {
+                navController.popBackStack()
             }
         }
     }
