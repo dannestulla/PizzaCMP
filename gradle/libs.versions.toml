@@ -12,7 +12,7 @@ androidx-test-junit = "1.2.1"
 androidx-viewmodel = "2.8.4"
 kotlin = "2.0.0"
 ktor = "2.3.12"
-koin = "3.5.3"
+koin = "4.0.0-RC1"
 sqlDelight = "2.0.2"
 datetime = "0.6.0"
 androidx-lifecycle = "2.8.0"
@@ -28,7 +28,8 @@ mockkery = "2.2.0"
 junitVersion = "4.13.2"
 jupiter = "5.10.1"
 rules = "1.6.1"
-
+logback = "1.5.6"
+koinComposeMultiplatform = "1.2.0-alpha3"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -39,6 +40,8 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqlDelight" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 mockkery = { id = "dev.mokkery", version.ref = "mockkery" }
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
 
 [libraries]
 # GENERAL
@@ -89,10 +92,23 @@ ktor-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
 ktor-ios = { module = "io.ktor:ktor-client-ios", version.ref = "ktor" }
 ktor-darwin = { group = "io.ktor", name = "ktor-client-darwin", version.ref = "ktor" }
 
+# SERVER
+ktor-server-core = { module = "io.ktor:ktor-server-core-jvm", version.ref = "ktor" }
+ktor-server-netty = { module = "io.ktor:ktor-server-netty-jvm", version.ref = "ktor" }
+ktor-server-tests = { module = "io.ktor:ktor-server-tests-jvm", version.ref = "ktor" }
+ktor-websocket = { module = "io.ktor:ktor-server-websockets", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
+ktor-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
+ktor-sessions = { module = "io.ktor:ktor-server-sessions", version.ref = "ktor" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+
 # KOIN
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
-koin-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koin" }
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koinComposeMultiplatform" }
+koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koinComposeMultiplatform" }
+
 koin-test = { group = "io.insert-koin", name = "koin-test", version.ref = "koin" }
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 junit = { group = "junit", name = "junit", version.ref = "junitVersion" }

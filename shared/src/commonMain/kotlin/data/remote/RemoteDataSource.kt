@@ -1,11 +1,10 @@
 package data.remote
 
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.post
 import kotlinx.coroutines.flow.Flow
-import mocks.driver
-import mocks.mapDirections
-import mocks.messages
-import mocks.products
 import presentation.model.Driver
 import presentation.model.MapDirections
 import presentation.model.Message
@@ -14,27 +13,23 @@ import presentation.model.PizzaProductUi
 class RemoteDataSource(
     private val httpClient: HttpClient,
 ) {
-    //private val baseUrl = "https://api.escuelajs.co/api/v1"
-
     suspend fun getProducts(): List<PizzaProductUi> {
-        return products
-        // return httpClient.get("$baseUrl/products").body()
+        return httpClient.get("products").body()
     }
 
-    fun getDriver(): Driver {
-        return driver
+    suspend fun getDriver(): Driver {
+        return httpClient.get("driver").body()
     }
 
-    fun getMapDirections(): MapDirections {
-        return mapDirections
+    suspend fun getMapDirections(): MapDirections {
+        return httpClient.get("directions").body()
     }
 
-    fun getMessages(): Flow<Message> {
-        return messages
+    suspend fun getMessages(): Flow<Message> {
+        return httpClient.get("messages").body()
     }
 
-    fun sendOrder(selectionUi: List<PizzaProductUi>) {
-
+    suspend fun sendOrder(selectionUi: List<PizzaProductUi>) {
+        return httpClient.post("order").body()
     }
-
 }

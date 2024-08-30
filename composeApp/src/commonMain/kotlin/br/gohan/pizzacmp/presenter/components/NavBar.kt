@@ -38,13 +38,14 @@ fun NavBar(selected: PizzaRoutes, callback: (PizzaRoutes) -> Unit) {
                     callback.invoke(PizzaRoutes.Products)
                 },
                 label = {
-                    val bold = if (selected == PizzaRoutes.Products) FontWeight.Bold else FontWeight.Normal
+                    val bold =
+                        if (selected == PizzaRoutes.Products || selected == PizzaRoutes.Product) FontWeight.Bold else FontWeight.Normal
                     Text(
                         text = "Products", fontWeight = bold
                     )
                 },
                 icon = {
-                    if (selected == PizzaRoutes.Products) {
+                    if (selected == PizzaRoutes.Products || selected == PizzaRoutes.Product) {
                         Icon(
                             imageVector = Icons.Default.Menu,
                             contentDescription = "Products Icon",

@@ -17,6 +17,7 @@ kotlin {
         }
     }
 
+    jvm()
 
     listOf(
         iosX64(),

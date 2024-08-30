@@ -42,7 +42,7 @@ class PizzaRepositoryImpl(
         return remoteDataSource.getMessages()
     }
 
-    override fun sendOrder(selectionUi: List<PizzaProductUi>) {
+    override suspend fun sendOrder(selectionUi: List<PizzaProductUi>) {
         remoteDataSource.sendOrder(selectionUi)
     }
 
