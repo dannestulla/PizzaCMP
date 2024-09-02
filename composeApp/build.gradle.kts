@@ -38,6 +38,8 @@ kotlin {
             implementation(libs.androidx.test.junit)
             implementation(libs.androidx.espresso.core)
             implementation(libs.test.rule)
+            implementation(libs.androidx.viewmodel)
+            implementation(libs.sqldelight.android.driver)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -62,6 +64,16 @@ kotlin {
             implementation(libs.coil.network.ktor)
             implementation(libs.datastore.preferences)
             implementation(libs.datastore)
+            implementation(libs.bundles.ktor)
+            implementation(libs.sqldelight.runtime)
+            implementation(libs.sqldelight.coroutines.extensions)
+            implementation(libs.datetime)
+            implementation(libs.koin.compose.viewmodel)
+        }
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin)
+            implementation(libs.ktor.ios)
+            implementation(libs.sqldelight.native.driver)
         }
     }
 }

@@ -38,6 +38,7 @@ kotlin {
             implementation(libs.sqldelight.coroutines.extensions)
             implementation(libs.datetime)
             implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.koin.compose.viewmodel)
         }
         iosMain.dependencies {
             implementation(libs.ktor.darwin)

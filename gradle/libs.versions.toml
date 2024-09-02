@@ -29,7 +29,7 @@ junitVersion = "4.13.2"
 jupiter = "5.10.1"
 rules = "1.6.1"
 logback = "1.5.6"
-koinComposeMultiplatform = "1.2.0-alpha3"
+koinComposeMultiplatform = "4.0.0-RC1"
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -100,6 +100,8 @@ ktor-websocket = { module = "io.ktor:ktor-server-websockets", version.ref = "kto
 ktor-logging = { module = "io.ktor:ktor-server-call-logging", version.ref = "ktor" }
 ktor-headers = { module = "io.ktor:ktor-server-default-headers", version.ref = "ktor" }
 ktor-sessions = { module = "io.ktor:ktor-server-sessions", version.ref = "ktor" }
+
+ktor-content-negotiation = { module = "io.ktor:ktor-server-content-negotiation", version.ref = "ktor" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
 
 # KOIN

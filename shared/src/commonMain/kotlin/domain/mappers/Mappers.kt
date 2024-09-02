@@ -2,21 +2,7 @@ package domain.mappers
 
 import database.Checkout
 import kotlinx.serialization.json.Json
-import presentation.model.ExampleUi
 import presentation.model.PizzaProductUi
-
-fun List<ExampleUi>.toProduct(): List<ExampleUi> =
-    this.map {
-        ExampleUi(
-            title = it.title,
-            oldPrice = it.oldPrice,
-            newPrice = it.newPrice,
-            description = it.description,
-            images = listOf(it.title),
-            discount = it.discount,
-            category = it.category
-        )
-    }
 
 fun List<Checkout>.toProductUi(): List<PizzaProductUi> =
     this.map {

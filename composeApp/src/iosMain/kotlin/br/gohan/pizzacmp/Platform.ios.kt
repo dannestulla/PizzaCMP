@@ -1,3 +1,5 @@
+package br.gohan.pizzacmp
+
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {

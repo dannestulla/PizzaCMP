@@ -50,7 +50,6 @@ val products = listOf(
     )
 )
 
-
 val messages = flowOf(
     Message.Someone("Hello, I am delivering your order", "10:10"),
     Message.Mine("Great, thank you! How long will it take?", "10:11"),

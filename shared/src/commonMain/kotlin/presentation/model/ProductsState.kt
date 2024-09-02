@@ -1,6 +1,5 @@
 package presentation.model
 
-import data.remote.Products
 import kotlin.jvm.JvmInline
 
 

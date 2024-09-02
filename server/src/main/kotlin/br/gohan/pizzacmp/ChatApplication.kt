@@ -61,7 +61,6 @@ class ChatApplication {
         }
 
         routing {
-
             get("/products") {
                 call.respond(products)
             }
@@ -73,8 +72,6 @@ class ChatApplication {
             get("/directions") {
                 call.respond(mapDirections)
             }
-
-
 
             webSocket("/ws") {
 
