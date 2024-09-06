@@ -13,21 +13,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.actions.CheckoutAction
 import br.gohan.pizzacmp.presenter.components.ButtonPrimary
 import br.gohan.pizzacmp.presenter.components.CardCheckout
 import br.gohan.pizzacmp.presenter.components.RowInfo
 import br.gohan.pizzacmp.presenter.components.RowTotalQuantity
+import data.model.PizzaSelected
 import domain.toCurrency
-import org.koin.compose.koinInject
-import presentation.CheckoutViewModel
-import presentation.model.PizzaProductUi
+import org.koin.compose.viewmodel.koinViewModel
+import presentation.ui.theme.Dimens
+import presentation.viewModels.CheckoutViewModel
 
 @Composable
 fun CheckoutScreen(
     paddingValues: PaddingValues,
-    viewModel: CheckoutViewModel = koinInject(),
+    viewModel: CheckoutViewModel = koinViewModel(),
     confirmOrder: () -> Unit = {}
 ) {
     val products by viewModel.state.collectAsState()
@@ -51,7 +51,7 @@ fun CheckoutScreen(
 @Composable
 fun CheckoutScreenStateless(
     paddingValues: PaddingValues,
-    products: List<PizzaProductUi>,
+    products: List<PizzaSelected>,
     action: (CheckoutAction) -> Unit
 ) {
     LazyColumn(
@@ -70,7 +70,7 @@ fun CheckoutScreenStateless(
         item {
             HorizontalDivider()
             RowTotalQuantity(quantity = products.size.toString())
-            val totalPrice = products.sumOf { it.priceSelected ?: 0.0 }
+            val totalPrice = products.sumOf { it.priceSelected }
             RowInfo("Total", info = totalPrice.toCurrency())
             Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
             ButtonPrimary(label = "Confirm order") {

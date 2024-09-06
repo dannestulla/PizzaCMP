@@ -20,17 +20,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.gohan.pizzacmp.Dimens
-import presentation.model.PizzaProductUi
+import data.model.PizzaProduct
+import presentation.ui.theme.Dimens
 
 @Composable
-fun CardProduct(pizzaProductUi: PizzaProductUi, onClick: (PizzaProductUi) -> Unit) =
-    with(pizzaProductUi) {
+fun CardProduct(pizzaProduct: PizzaProduct, onClick: (PizzaProduct) -> Unit) =
+    with(pizzaProduct) {
         Card(
             border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
             onClick = {
                 onClick(
-                    pizzaProductUi
+                    pizzaProduct
                 )
             }
         ) {

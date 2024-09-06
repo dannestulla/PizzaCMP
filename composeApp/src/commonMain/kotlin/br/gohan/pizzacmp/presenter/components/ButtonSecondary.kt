@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import br.gohan.pizzacmp.Dimens
+import presentation.ui.theme.Dimens
 
 @Composable
 fun ButtonSecondary(modifier: Modifier = Modifier, label: String, onClick: () -> Unit) {

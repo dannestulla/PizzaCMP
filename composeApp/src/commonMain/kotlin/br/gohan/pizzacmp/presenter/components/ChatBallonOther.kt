@@ -9,13 +9,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.gohan.pizzacmp.Dimens
-import presentation.model.Message
+import presentation.model.NewMessage
+import presentation.ui.theme.Dimens
 
 @Composable
 fun ChatBalloonSomeone(
     modifier: Modifier = Modifier,
-    message: Message.Someone
+    message: NewMessage.Someone
 ) {
     Card(modifier) {
         Column(Modifier.padding(Dimens.paddingSmall)) {

@@ -1,9 +1,11 @@
 package br.gohan.pizzacmp
 
+import data.CLIENT_IP
+import data.LocalDataSource
 import data.PizzaRepository
 import data.PizzaRepositoryImpl
-import data.local.LocalDataSource
-import data.remote.RemoteDataSource
+import data.RemoteDataSource
+import data.SERVER_PORT
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -17,11 +19,11 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import presentation.ChatViewModel
-import presentation.CheckoutViewModel
-import presentation.DeliverViewModel
-import presentation.ProductViewModel
-import presentation.ProductsViewModel
+import presentation.viewModels.ChatViewModel
+import presentation.viewModels.CheckoutViewModel
+import presentation.viewModels.DeliverViewModel
+import presentation.viewModels.ProductViewModel
+import presentation.viewModels.ProductsViewModel
 
 fun initKoin(
     appDeclaration: KoinAppDeclaration? = null,
@@ -52,29 +54,16 @@ val api = module {
                 })
             }
             defaultRequest {
-                url("http://10.0.2.2:8080")
+                url(
+                    host = CLIENT_IP,
+                    port = SERVER_PORT
+                )
             }
         }
     }
 }
 
 val core = module {
-    single {
-        HttpClient(CIO) {
-            install(Logging) {
-                level = LogLevel.ALL
-            }
-            install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                })
-            }
-            defaultRequest {
-                url("http://10.0.2.2:8080")
-            }
-        }
-    }
     viewModel { CheckoutViewModel(get()) }
     viewModel { DeliverViewModel(get()) }
     viewModel { ChatViewModel(get()) }

@@ -13,19 +13,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import br.gohan.pizzacmp.DataStoreManager
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.components.CardProduct
+import data.model.PizzaProduct
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
-import presentation.ProductsViewModel
-import presentation.model.PizzaProductUi
+import org.koin.compose.viewmodel.koinViewModel
+import presentation.ui.theme.Dimens
+import presentation.viewModels.ProductsViewModel
 
 @Composable
 fun ProductsScreen(
     paddingValues: PaddingValues,
     currentSearch: String?,
     dataStore: DataStoreManager,
-    viewModel: ProductsViewModel = koinInject(),
+    viewModel: ProductsViewModel = koinViewModel(),
     navigateToProduct: () -> Unit
 ) {
 
@@ -53,9 +53,9 @@ fun ProductsScreen(
 @Composable
 fun ProductsScreenStateless(
     paddingValues: PaddingValues,
-    products: List<PizzaProductUi>? = null,
+    products: List<PizzaProduct>? = null,
     currentSearch: String?,
-    selectedPizza: (PizzaProductUi) -> Unit
+    selectedPizza: (PizzaProduct) -> Unit
 ) {
 
     if (products == null) {

@@ -27,10 +27,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.unit.dp
-import br.gohan.pizzacmp.Dimens
 import org.jetbrains.compose.resources.painterResource
 import pizzacmp.composeapp.generated.resources.Res
 import pizzacmp.composeapp.generated.resources.minus
+import presentation.ui.theme.Dimens
 
 @Composable
 fun RowQuantity(oldValue: Pair<String, Int>, newValue: (Pair<String, Int>) -> Unit) {

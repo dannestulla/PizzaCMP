@@ -2,14 +2,14 @@ package br.gohan.pizzacmp
 
 
 import androidx.datastore.preferences.core.stringPreferencesKey
-import presentation.model.PizzaProductUi
+import data.model.PizzaProduct
 
 
 val PRODUCT_KEY = stringPreferencesKey("product")
 
 
 interface DataStoreManager {
-    suspend fun cacheProduct(productUI: PizzaProductUi)
+    suspend fun cacheProduct(productUI: PizzaProduct)
 
-    suspend fun retrieveProduct(): PizzaProductUi?
+    suspend fun retrieveProduct(): PizzaProduct?
 }

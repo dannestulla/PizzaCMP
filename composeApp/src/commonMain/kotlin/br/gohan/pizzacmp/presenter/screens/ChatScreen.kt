@@ -17,22 +17,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.components.ButtonSecondary
 import br.gohan.pizzacmp.presenter.components.ChatBalloonMe
 import br.gohan.pizzacmp.presenter.components.ChatBalloonSomeone
-import org.koin.compose.koinInject
-import presentation.ChatViewModel
-import presentation.model.Message
+import org.koin.compose.viewmodel.koinViewModel
+import presentation.model.NewMessage
+import presentation.ui.theme.Dimens
+import presentation.viewModels.ChatViewModel
 
 @Composable
 fun ChatScreen(
     paddingValues: PaddingValues,
-    viewModel: ChatViewModel = koinInject(),
+    viewModel: ChatViewModel = koinViewModel(),
     back: () -> Unit
 ) {
-    val newMessage by viewModel.state.collectAsStateWithLifecycle(Message.Mine("Teste", "213"))
-    val messages = remember { mutableStateListOf<Message>() }
+    val newMessage by viewModel.state.collectAsStateWithLifecycle(NewMessage.Mine("Teste", "213"))
+    val messages = remember { mutableStateListOf<NewMessage>() }
 
     LaunchedEffect(Unit) {
         viewModel.getMessages()
@@ -47,7 +47,7 @@ fun ChatScreen(
 
 @Composable
 fun ChatScreenStateless(
-    messages: List<Message>?,
+    messages: List<NewMessage>?,
     paddingValues: PaddingValues,
     back: () -> Unit
 ) {
@@ -66,12 +66,12 @@ fun ChatScreenStateless(
         Spacer(modifier = Modifier.height(20.dp))
         messages?.forEach { message ->
             when (message) {
-                is Message.Someone -> ChatBalloonSomeone(
+                is NewMessage.Someone -> ChatBalloonSomeone(
                     modifier = Modifier.align(alignment = Alignment.Start),
                     message = message
                 )
 
-                is Message.Mine -> ChatBalloonMe(
+                is NewMessage.Mine -> ChatBalloonMe(
                     modifier = Modifier.align(alignment = Alignment.End),
                     message = message
                 )

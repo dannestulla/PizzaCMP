@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import br.gohan.pizzacmp.Dimens
+import presentation.ui.theme.Dimens
 
 @Composable
 fun RowDeliver(image: String? = null, name: String, startChat: () -> Unit) {

@@ -21,8 +21,9 @@ import androidx.navigation.compose.rememberNavController
 import br.gohan.pizzacmp.presenter.actions.TopBarAction
 import br.gohan.pizzacmp.presenter.components.NavBar
 import br.gohan.pizzacmp.presenter.components.TopBar
-import br.gohan.pizzacmp.ui.theme.PizzaTheme
 import presentation.model.TopBarState
+import presentation.ui.theme.Dimens
+import presentation.ui.theme.PizzaTheme
 
 @Composable
 fun PizzaApp(dataStore: DataStoreManager) {

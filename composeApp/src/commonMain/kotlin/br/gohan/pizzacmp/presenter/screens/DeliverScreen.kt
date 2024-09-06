@@ -21,20 +21,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.components.ButtonSecondary
 import br.gohan.pizzacmp.presenter.components.DeliverFab
 import br.gohan.pizzacmp.presenter.components.RowDeliver
 import br.gohan.pizzacmp.presenter.components.RowInfo
-import org.koin.compose.koinInject
-import presentation.DeliverViewModel
-import presentation.model.Driver
-import presentation.model.MapDirections
+import org.koin.compose.viewmodel.koinViewModel
+import presentation.model.DriverState
+import presentation.model.MapDirectionsState
+import presentation.ui.theme.Dimens
+import presentation.viewModels.DeliverViewModel
 
 @Composable
 fun DeliverScreen(
     paddingValues: PaddingValues,
-    viewModel: DeliverViewModel = koinInject(),
+    viewModel: DeliverViewModel = koinViewModel(),
     goToChat: () -> Unit
 ) {
     val state by viewModel.state.collectAsState()
@@ -48,8 +48,8 @@ fun DeliverScreen(
 
 @Composable
 fun DeliverScreenStateless(
-    driver: Driver,
-    mapDirections: MapDirections,
+    driver: DriverState,
+    mapDirections: MapDirectionsState,
     paddingValues: PaddingValues,
     goToChat: () -> Unit = {},
 ) {

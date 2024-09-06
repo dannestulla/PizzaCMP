@@ -4,14 +4,13 @@ CREATE TABLE Checkout (
     name TEXT NOT NULL,
     description TEXT NOT NULL,
     toppings TEXT NOT NULL, -- Armazenado como JSON
-    prices TEXT NOT NULL, -- Armazenado como JSON
     sizeSelected TEXT NOT NULL,
-    priceSelected REAL
+    priceSelected TEXT NOT NULL
 );
 
 insertProduct:
-INSERT INTO Checkout (image, name, description, toppings, prices, sizeSelected, priceSelected)
-VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO Checkout (image, name, description, toppings, sizeSelected, priceSelected)
+VALUES (?, ?, ?, ?, ?, ?);
 
 selectAllProducts:
 SELECT * FROM Checkout;
@@ -22,7 +21,7 @@ WHERE id = ?;
 
 updateProduct:
 UPDATE Checkout
-SET image = ?, name = ?, description = ?, toppings = ?, prices = ?, sizeSelected = ?, priceSelected = ?
+SET image = ?, name = ?, description = ?, toppings = ?, sizeSelected = ?, priceSelected = ?
 WHERE id = ?;
 
 deleteProduct:

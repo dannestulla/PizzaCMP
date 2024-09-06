@@ -24,26 +24,28 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import br.gohan.pizzacmp.DataStoreManager
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.components.ButtonPrimary
 import br.gohan.pizzacmp.presenter.components.ImageLoader
 import br.gohan.pizzacmp.presenter.components.RowInfo
 import br.gohan.pizzacmp.presenter.components.SizeSelector
+import data.model.PizzaProduct
+import data.model.PizzaSelected
 import domain.toCurrency
+import domain.toSelected
 import kotlinx.coroutines.launch
-import org.koin.compose.koinInject
-import presentation.ProductViewModel
-import presentation.model.PizzaProductUi
+import org.koin.compose.viewmodel.koinViewModel
+import presentation.ui.theme.Dimens
+import presentation.viewModels.ProductViewModel
 
 @Composable
 fun ProductScreen(
     paddingValues: PaddingValues,
     dataStore: DataStoreManager,
-    viewModel: ProductViewModel = koinInject()
+    viewModel: ProductViewModel = koinViewModel(),
 ) {
     val coroutine = rememberCoroutineScope()
 
-    var product by remember { mutableStateOf<PizzaProductUi?>(null) }
+    var product by remember { mutableStateOf<PizzaProduct?>(null) }
 
     coroutine.launch {
         product = dataStore.retrieveProduct()
@@ -61,12 +63,12 @@ fun ProductScreen(
 @Composable
 fun ProductScreenStateless(
     paddingValues: PaddingValues,
-    product: PizzaProductUi,
-    addProduct: (PizzaProductUi) -> Unit
+    product: PizzaProduct,
+    addProduct: (PizzaSelected) -> Unit
 ) {
     val scrollState = rememberScrollState()
 
-    var pizzaProduct by remember { mutableStateOf(product) }
+    var pizzaSelected by remember { mutableStateOf(product.toSelected()) }
 
     var buttonEnabled by remember { mutableStateOf(true) }
 
@@ -88,34 +90,34 @@ fun ProductScreenStateless(
         ImageLoader(Modifier.width(300.dp))
         Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
         Text(
-            pizzaProduct.name,
+            pizzaSelected.name,
             fontSize = Dimens.fontHuger,
             fontWeight = FontWeight.Bold,
             style = MaterialTheme.typography.headlineMedium
         )
         Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
         Text(
-            pizzaProduct.description,
+            pizzaSelected.description,
             fontWeight = FontWeight.Medium,
             fontSize = Dimens.fontSmaller,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         Spacer(modifier = Modifier.height(Dimens.paddingInsideItemsSmall))
-        SizeSelector {
-            pizzaProduct = pizzaProduct.copy(
-                sizeSelected = it,
-                priceSelected = pizzaProduct.prices[it.ordinal]
+        SizeSelector { sizeSelected ->
+            pizzaSelected = pizzaSelected.copy(
+                sizeSelected = sizeSelected,
+                priceSelected = product.prices[sizeSelected.ordinal]
             )
         }
         Spacer(modifier = Modifier.height(Dimens.paddingInsideHuge))
-        RowInfo("Price", info = pizzaProduct.priceSelected?.toCurrency() ?: "")
+        RowInfo("Price", info = pizzaSelected.priceSelected.toCurrency())
         Spacer(modifier = Modifier.height(Dimens.paddingInsideItems))
         ButtonPrimary(
             enabled = buttonEnabled,
             label = "Add Product"
         ) {
-            addProduct(pizzaProduct)
+            addProduct(pizzaSelected)
             buttonEnabled = false
         }
         Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))

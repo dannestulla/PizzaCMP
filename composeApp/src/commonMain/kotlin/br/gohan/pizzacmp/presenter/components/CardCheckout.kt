@@ -24,16 +24,16 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.actions.CheckoutAction
+import data.model.PizzaSelected
 import domain.toCurrency
-import presentation.model.PizzaProductUi
+import presentation.ui.theme.Dimens
 
 @Composable
-fun CardCheckout(selectionUi: PizzaProductUi, action: (CheckoutAction) -> Unit) {
+fun CardCheckout(selectionUi: PizzaSelected, action: (CheckoutAction) -> Unit) {
     var isToppingOptionsExpanded by remember { mutableStateOf(false) }
-    val product by remember { mutableStateOf(selectionUi) }
-    val toppingsSelected by remember { mutableStateOf(selectionUi.toppings.toMutableMap()) }
+    val pizza by remember { mutableStateOf(selectionUi) }
+    val toppingsSelected by remember { mutableStateOf(selectionUi.toppingsSelected.toMutableMap()) }
 
     Card(
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
@@ -54,13 +54,13 @@ fun CardCheckout(selectionUi: PizzaProductUi, action: (CheckoutAction) -> Unit) 
                     modifier = Modifier.padding(vertical = 6.dp),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    ImageLoader(image = product.image)
+                    ImageLoader(image = pizza.image)
                 }
-                product.priceSelected?.let { price ->
+                pizza.priceSelected.let { price ->
                     Column(Modifier.padding(start = 16.dp, bottom = 6.dp, top = 6.dp)) {
-                        Text(product.name, fontSize = Dimens.fontHuge)
+                        Text(pizza.name, fontSize = Dimens.fontHuge)
                         Spacer(Modifier.height(6.dp))
-                        Text(product.toppings.toString(), fontSize = Dimens.fontSmall)
+                        Text(pizza.toppingsSelected.toString(), fontSize = Dimens.fontSmall)
                         Spacer(modifier = Modifier.weight(1f))
                         Row {
                             Text(
@@ -86,9 +86,9 @@ fun CardCheckout(selectionUi: PizzaProductUi, action: (CheckoutAction) -> Unit) 
                 isToppingOptionsExpanded = isExpanded
             }
             if (isToppingOptionsExpanded) {
-                product.toppings.forEach { topping ->
+                pizza.toppingsSelected.forEach { topping ->
                     RowQuantity(topping.toPair()) { selected ->
-                        toppingsSelected[selected.first] = selected.second
+                        toppingsSelected?.set(selected.first, selected.second)
                         action(CheckoutAction.Toppings(selectionUi))
                     }
                 }

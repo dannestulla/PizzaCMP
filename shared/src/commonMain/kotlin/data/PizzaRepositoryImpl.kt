@@ -1,20 +1,20 @@
 package data
 
-import data.local.LocalDataSource
-import data.remote.RemoteDataSource
+import data.model.Order
+import data.model.PizzaProduct
+import data.model.PizzaSelected
 import database.Checkout
 import kotlinx.coroutines.flow.Flow
-import presentation.model.Driver
-import presentation.model.MapDirections
-import presentation.model.Message
-import presentation.model.PizzaProductUi
+import presentation.model.DriverState
+import presentation.model.MapDirectionsState
+import presentation.model.NewMessage
 
 
 class PizzaRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : PizzaRepository {
-    override suspend fun getProducts(): List<PizzaProductUi> {
+    override suspend fun getProducts(): List<PizzaProduct> {
         return remoteDataSource.getProducts()
     }
 
@@ -22,27 +22,27 @@ class PizzaRepositoryImpl(
         return localDataSource.getItems()
     }
 
-    override suspend fun saveCheckoutItem(item: PizzaProductUi) {
+    override suspend fun saveCheckoutItem(item: PizzaSelected) {
         localDataSource.saveItem(item)
     }
 
-    override suspend fun deleteCheckoutItem(item: PizzaProductUi) {
+    override suspend fun deleteCheckoutItem(item: PizzaSelected) {
         localDataSource.deleteItem(item.name)
     }
 
-    override suspend fun getDriver(): Driver {
+    override suspend fun getDriver(): DriverState {
         return remoteDataSource.getDriver()
     }
 
-    override suspend fun getMapDirections(): MapDirections {
+    override suspend fun getMapDirections(): MapDirectionsState {
         return remoteDataSource.getMapDirections()
     }
 
-    override suspend fun getMessages(): Flow<Message> {
+    override suspend fun getMessages(): Flow<NewMessage> {
         return remoteDataSource.getMessages()
     }
 
-    override suspend fun sendOrder(selectionUi: List<PizzaProductUi>) {
+    override suspend fun sendOrder(selectionUi: Order) {
         remoteDataSource.sendOrder(selectionUi)
     }
 

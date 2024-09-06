@@ -29,9 +29,9 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.actions.TopBarAction
 import presentation.model.TopBarState
+import presentation.ui.theme.Dimens
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

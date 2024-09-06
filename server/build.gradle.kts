@@ -24,6 +24,7 @@ dependencies {
     implementation(libs.ktor.headers)
     implementation(libs.ktor.content.negotiation)
     implementation(libs.ktor.serialization.kotlinx.json)
-
+    implementation(libs.ktor.sse)
+    implementation(projects.shared)
     testImplementation(libs.ktor.server.tests)
 }

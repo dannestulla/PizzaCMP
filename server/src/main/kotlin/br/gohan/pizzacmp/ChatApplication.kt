@@ -7,7 +7,7 @@ import io.ktor.server.application.install
 import io.ktor.server.http.content.defaultResource
 import io.ktor.server.http.content.resources
 import io.ktor.server.http.content.static
-import io.ktor.server.plugins.callloging.CallLogging
+import io.ktor.server.plugins.calllogging.CallLogging
 import io.ktor.server.plugins.defaultheaders.DefaultHeaders
 import io.ktor.server.response.respond
 import io.ktor.server.routing.get

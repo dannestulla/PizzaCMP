@@ -16,7 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
-import presentation.model.PizzaSize
+import data.model.PizzaSize
 
 @Composable
 fun SizeSelector(sizes: (PizzaSize) -> Unit) {

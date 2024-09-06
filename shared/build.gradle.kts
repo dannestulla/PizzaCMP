@@ -7,6 +7,8 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.sqldelight)
     alias(libs.plugins.mockkery)
+    alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
 }
 
 kotlin {
@@ -39,6 +41,11 @@ kotlin {
             implementation(libs.datetime)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.koin.compose.viewmodel)
+            implementation(compose.runtime)
+            implementation(compose.foundation)
+            implementation(compose.material)
+            implementation(compose.material3)
+            implementation(compose.ui)
         }
         iosMain.dependencies {
             implementation(libs.ktor.darwin)
