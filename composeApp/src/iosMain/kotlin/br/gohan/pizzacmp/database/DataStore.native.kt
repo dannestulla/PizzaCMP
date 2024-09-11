@@ -1,4 +1,4 @@
-package br.gohan.pizzacmp
+package br.gohan.pizzacmp.database
 
 import data.model.PizzaProduct
 import kotlinx.serialization.json.Json

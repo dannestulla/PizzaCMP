@@ -23,19 +23,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import br.gohan.pizzacmp.DataStoreManager
+import br.gohan.pizzacmp.database.DataStoreManager
 import br.gohan.pizzacmp.presenter.components.ButtonPrimary
 import br.gohan.pizzacmp.presenter.components.ImageLoader
 import br.gohan.pizzacmp.presenter.components.RowInfo
 import br.gohan.pizzacmp.presenter.components.SizeSelector
 import data.model.PizzaProduct
 import data.model.PizzaSelected
+import data.model.PizzaSize
 import domain.toCurrency
 import domain.toSelected
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import presentation.ui.theme.Dimens
-import presentation.viewModels.ProductViewModel
+import presentation.viewmodels.ProductViewModel
 
 @Composable
 fun ProductScreen(
@@ -68,7 +69,15 @@ fun ProductScreenStateless(
 ) {
     val scrollState = rememberScrollState()
 
-    var pizzaSelected by remember { mutableStateOf(product.toSelected()) }
+    var pizzaSelected by remember {
+        mutableStateOf(
+            product.toSelected(
+                mapOf(),
+                PizzaSize.NotSelected,
+                Double.NaN
+            )
+        )
+    }
 
     var buttonEnabled by remember { mutableStateOf(true) }
 
@@ -106,7 +115,7 @@ fun ProductScreenStateless(
         Spacer(modifier = Modifier.height(Dimens.paddingInsideItemsSmall))
         SizeSelector { sizeSelected ->
             pizzaSelected = pizzaSelected.copy(
-                sizeSelected = sizeSelected,
+                sizeSelected = sizeSelected.name,
                 priceSelected = product.prices[sizeSelected.ordinal]
             )
         }
@@ -117,8 +126,14 @@ fun ProductScreenStateless(
             enabled = buttonEnabled,
             label = "Add Product"
         ) {
-            addProduct(pizzaSelected)
-            buttonEnabled = false
+            if (pizzaSelected.sizeSelected.isBlank()
+                || pizzaSelected.priceSelected.isNaN()
+            ) {
+                // Show error toast
+            } else {
+                addProduct(pizzaSelected)
+                buttonEnabled = false
+            }
         }
         Spacer(modifier = Modifier.height(Dimens.paddingInsideLarge))
 

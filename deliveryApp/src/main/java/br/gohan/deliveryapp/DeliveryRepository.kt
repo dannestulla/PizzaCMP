@@ -1,25 +1,32 @@
 package br.gohan.deliveryapp
 
-import data.CLIENT_IP
+import api.ApiRoutes
+import api.EMULATOR_IP
 import data.model.Order
+import data.model.Orders
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.sse.SSE
-import io.ktor.client.plugins.sse.sse
-import io.ktor.client.request.post
-import io.ktor.client.request.setBody
-import io.ktor.http.ContentType
-import io.ktor.http.contentType
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.client.plugins.websocket.receiveDeserialized
+import io.ktor.client.plugins.websocket.webSocket
+import io.ktor.http.HttpMethod
+import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.serialization.json.Json
 
 class DeliveryRepository {
-    private lateinit var client: HttpClient
+    private lateinit var httpClient: HttpClient
 
     fun setHttpClient() {
-        client = HttpClient(CIO) {
+        httpClient = HttpClient(CIO) {
             install(SSE)
+            install(WebSockets) {
+                contentConverter = KotlinxWebsocketSerializationConverter(Json)
+            }
             install(ContentNegotiation) {
                 json(Json {
                     prettyPrint = true
@@ -29,29 +36,25 @@ class DeliveryRepository {
         }
     }
 
-    suspend fun observeOrders(newOrder: (Order) -> Unit) {
-        client.sse(
-            host = CLIENT_IP,
-            port = 8080,
-            path = "/orders"
+    suspend fun observeOrders(
+        orders: MutableStateFlow<Orders>,
+        acceptOrder: MutableSharedFlow<Order>
+    ) {
+        httpClient.webSocket(
+            path = ApiRoutes.DeliverWebSocket.route,
+            method = HttpMethod.Get,
+            host = EMULATOR_IP,
+            port = 8080
         ) {
-            while (true) {
-                incoming.collect { event ->
-                    println("Event from server: ${event.data}")
-                    if (event.data == null) return@collect
-                    val order = Json.decodeFromString(Order.serializer(), event.data!!)
-                    newOrder.invoke(order)
-                }
+            val ordersList = receiveDeserialized<Orders>()
+            /*
+            orders.update {
+                ordersList
             }
-        }
-    }
 
-    suspend fun acceptOrder(order: Order) {
-        client.post("accept-order") {
-            contentType(ContentType.Application.Json)
-            setBody {
-                order
-            }
+            acceptOrder.collect {
+                sendSerialized(it)
+            }*/
         }
     }
 }

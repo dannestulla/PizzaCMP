@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import br.gohan.pizzacmp.database.DataStoreManager
 import br.gohan.pizzacmp.presenter.screens.ChatScreen
 import br.gohan.pizzacmp.presenter.screens.CheckoutScreen
 import br.gohan.pizzacmp.presenter.screens.DeliverScreen

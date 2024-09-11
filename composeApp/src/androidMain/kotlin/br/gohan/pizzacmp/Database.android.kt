@@ -4,7 +4,7 @@ import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 import br.gohan.pizzacmp.database.PizzaDatabase
-import data.DatabaseDriverFactory
+import data.local.DatabaseDriverFactory
 import org.koin.dsl.module
 
 class AndroidDatabaseDriverFactory(private val context: Context) : DatabaseDriverFactory {

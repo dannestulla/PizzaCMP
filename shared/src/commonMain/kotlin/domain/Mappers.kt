@@ -15,23 +15,23 @@ fun List<Checkout>.toProductUi(): List<PizzaSelected> =
             name = it.name,
             description = it.description,
             toppingsSelected = Json.decodeFromString(it.toppings),
-            sizeSelected = Json.decodeFromString(it.sizeSelected),
-            priceSelected = it.priceSelected.toDouble()
+            sizeSelected = it.sizeSelected,
+            priceSelected = it.priceSelected.currencyToDouble()
         )
     }
 
 fun PizzaProduct.toSelected(
-    toppingsSelected: Map<String, Int>? = null,
-    sizeSelected: PizzaSize? = null,
-    priceSelected: Double? = null
+    toppingsSelected: Map<String, Int>,
+    sizeSelected: PizzaSize,
+    priceSelected: Double
 ): PizzaSelected =
     PizzaSelected(
         image = this.image,
         name = this.name,
         description = this.description,
-        toppingsSelected = toppingsSelected ?: mapOf(),
-        sizeSelected = sizeSelected ?: PizzaSize.Medium,
-        priceSelected = priceSelected ?: this.prices[1]
+        toppingsSelected = toppingsSelected,
+        sizeSelected = sizeSelected.name,
+        priceSelected = priceSelected
     )
 
 fun List<PizzaSelected>.toOrder(gpsPosition: Position): Order {
@@ -40,5 +40,6 @@ fun List<PizzaSelected>.toOrder(gpsPosition: Position): Order {
         pizzas = pizzas,
         numberOfProducts = this.size,
         addressPosition = gpsPosition,
+        address = "Plaja del Carmen, 123" // TODO get user address from user register
     )
 }

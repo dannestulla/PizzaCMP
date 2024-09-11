@@ -12,13 +12,13 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import br.gohan.pizzacmp.DataStoreManager
+import br.gohan.pizzacmp.database.DataStoreManager
 import br.gohan.pizzacmp.presenter.components.CardProduct
 import data.model.PizzaProduct
 import kotlinx.coroutines.launch
 import org.koin.compose.viewmodel.koinViewModel
 import presentation.ui.theme.Dimens
-import presentation.viewModels.ProductsViewModel
+import presentation.viewmodels.ProductsViewModel
 
 @Composable
 fun ProductsScreen(

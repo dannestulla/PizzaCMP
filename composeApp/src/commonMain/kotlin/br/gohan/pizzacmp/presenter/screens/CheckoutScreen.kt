@@ -22,13 +22,13 @@ import data.model.PizzaSelected
 import domain.toCurrency
 import org.koin.compose.viewmodel.koinViewModel
 import presentation.ui.theme.Dimens
-import presentation.viewModels.CheckoutViewModel
+import presentation.viewmodels.CheckoutViewModel
 
 @Composable
 fun CheckoutScreen(
     paddingValues: PaddingValues,
     viewModel: CheckoutViewModel = koinViewModel(),
-    confirmOrder: () -> Unit = {}
+    confirmOrder: () -> Unit
 ) {
     val products by viewModel.state.collectAsState()
 

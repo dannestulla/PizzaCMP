@@ -1,17 +1,19 @@
 package br.gohan.pizzacmp
 
-import data.CLIENT_IP
-import data.LocalDataSource
+import api.EMULATOR_IP
+import api.SERVER_PORT
 import data.PizzaRepository
 import data.PizzaRepositoryImpl
-import data.RemoteDataSource
-import data.SERVER_PORT
+import data.local.LocalDataSource
+import data.remote.RemoteDataSource
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.plugins.websocket.WebSockets
+import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.koin.core.context.startKoin
@@ -19,11 +21,11 @@ import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.KoinAppDeclaration
 import org.koin.dsl.module
-import presentation.viewModels.ChatViewModel
-import presentation.viewModels.CheckoutViewModel
-import presentation.viewModels.DeliverViewModel
-import presentation.viewModels.ProductViewModel
-import presentation.viewModels.ProductsViewModel
+import presentation.viewmodels.ChatViewModel
+import presentation.viewmodels.CheckoutViewModel
+import presentation.viewmodels.DeliverViewModel
+import presentation.viewmodels.ProductViewModel
+import presentation.viewmodels.ProductsViewModel
 
 fun initKoin(
     appDeclaration: KoinAppDeclaration? = null,
@@ -47,6 +49,9 @@ val api = module {
             install(Logging) {
                 level = LogLevel.ALL
             }
+            install(WebSockets) {
+                contentConverter = KotlinxWebsocketSerializationConverter(Json)
+            }
             install(ContentNegotiation) {
                 json(Json {
                     prettyPrint = true
@@ -55,8 +60,8 @@ val api = module {
             }
             defaultRequest {
                 url(
-                    host = CLIENT_IP,
-                    port = SERVER_PORT
+                    host = EMULATOR_IP,
+                    port = SERVER_PORT,
                 )
             }
         }
@@ -74,6 +79,6 @@ val core = module {
 
     factory { PizzaRepositoryImpl(get(), get()) }
     factory { RemoteDataSource(get()) }
-    factory { LocalDataSource() }
+    factory { LocalDataSource(get()) }
 }
 

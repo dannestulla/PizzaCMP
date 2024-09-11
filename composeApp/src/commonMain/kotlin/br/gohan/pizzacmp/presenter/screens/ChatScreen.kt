@@ -23,7 +23,7 @@ import br.gohan.pizzacmp.presenter.components.ChatBalloonSomeone
 import org.koin.compose.viewmodel.koinViewModel
 import presentation.model.NewMessage
 import presentation.ui.theme.Dimens
-import presentation.viewModels.ChatViewModel
+import presentation.viewmodels.ChatViewModel
 
 @Composable
 fun ChatScreen(
@@ -75,6 +75,10 @@ fun ChatScreenStateless(
                     modifier = Modifier.align(alignment = Alignment.End),
                     message = message
                 )
+
+                is NewMessage.AcceptOrder -> {
+
+                }
             }
         }
         Spacer(modifier = Modifier.weight(1f))

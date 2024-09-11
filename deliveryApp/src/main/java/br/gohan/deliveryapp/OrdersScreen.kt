@@ -12,13 +12,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import data.model.Order
+import data.model.Orders
 import presentation.ui.theme.Dimens
-import presentation.ui.theme.PizzaTheme
 
 @Composable
 fun OrdersScreen(
@@ -27,7 +26,7 @@ fun OrdersScreen(
 ) {
     val orders by viewModel.orders.collectAsStateWithLifecycle()
     OrdersScreenStateless(innerPadding, orders) { order ->
-        viewModel.acceptOrder(order)
+        //viewModel.acceptOrder(order)
     }
 
 }
@@ -35,10 +34,11 @@ fun OrdersScreen(
 @Composable
 fun OrdersScreenStateless(
     innerPadding: PaddingValues = PaddingValues(),
-    orders: List<Order>,
+    ordersGroup: Orders,
     modifier: Modifier = Modifier,
     acceptOrder: (Order) -> Unit,
 ) {
+    val orders = ordersGroup.orders
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -56,17 +56,6 @@ fun OrdersScreenStateless(
                     acceptOrder(order)
                 }
             }
-        }
-    }
-}
-
-
-@Preview(showSystemUi = true)
-@Composable
-private fun PreviewOrdersScreen() {
-    PizzaTheme {
-        OrdersScreenStateless(orders = orders) {
-
         }
     }
 }

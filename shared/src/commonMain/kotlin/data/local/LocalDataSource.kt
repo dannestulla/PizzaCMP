@@ -1,4 +1,4 @@
-package data
+package data.local
 
 import app.cash.sqldelight.coroutines.asFlow
 import app.cash.sqldelight.coroutines.mapToList
@@ -35,7 +35,7 @@ class LocalDataSource(
                 productUi.toppingsSelected
             ),
             priceSelected = productUi.priceSelected.toCurrency(),
-            sizeSelected = productUi.sizeSelected.name
+            sizeSelected = productUi.sizeSelected
         )
     }
 

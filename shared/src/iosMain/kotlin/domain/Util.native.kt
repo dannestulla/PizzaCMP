@@ -14,3 +14,11 @@ actual fun Double.toCurrency(): String {
     }
     return formatter.stringFromNumber(NSNumber(this)) ?: "$this"
 }
+
+actual fun String.currencyToDouble(): Double {
+    val formatter = NSNumberFormatter().apply {
+        numberStyle = NSNumberFormatterCurrencyStyle
+        locale = NSLocale(localeIdentifier = "pt_BR")
+    }
+    return formatter.numberFromString(this)?.doubleValue ?: 0.0
+}

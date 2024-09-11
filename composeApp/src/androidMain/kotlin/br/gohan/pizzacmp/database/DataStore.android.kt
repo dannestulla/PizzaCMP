@@ -1,4 +1,4 @@
-package br.gohan.pizzacmp
+package br.gohan.pizzacmp.database
 
 import android.content.Context
 import androidx.datastore.core.DataStore

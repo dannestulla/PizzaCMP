@@ -29,7 +29,7 @@ import org.koin.compose.viewmodel.koinViewModel
 import presentation.model.DriverState
 import presentation.model.MapDirectionsState
 import presentation.ui.theme.Dimens
-import presentation.viewModels.DeliverViewModel
+import presentation.viewmodels.DeliverViewModel
 
 @Composable
 fun DeliverScreen(

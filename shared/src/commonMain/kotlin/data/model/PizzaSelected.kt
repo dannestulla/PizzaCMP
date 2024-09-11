@@ -8,6 +8,6 @@ data class PizzaSelected(
     val name: String,
     val description: String,
     val toppingsSelected: Map<String, Int>,
-    val sizeSelected: PizzaSize,
+    val sizeSelected: String,
     val priceSelected: Double,
 )

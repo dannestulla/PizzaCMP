@@ -1,9 +1,8 @@
-package br.gohan.pizzacmp
+package br.gohan.pizzacmp.database
 
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.native.NativeSqliteDriver
-import br.gohan.pizzacmp.database.PizzaDatabase
-import data.DatabaseDriverFactory
+import data.local.DatabaseDriverFactory
 
 
 class IOSDatabaseDriverFactory : DatabaseDriverFactory {

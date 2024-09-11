@@ -1,5 +1,6 @@
 package br.gohan.pizzacmp
 
+import io.ktor.serialization.kotlinx.KotlinxWebsocketSerializationConverter
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.Application
 import io.ktor.server.application.install
@@ -16,7 +17,9 @@ fun Application.setConfig() {
             isLenient = true
         })
     }
-    install(WebSockets)
+    install(WebSockets) {
+        contentConverter = KotlinxWebsocketSerializationConverter(Json)
+    }
     install(SSE)
     install(CallLogging)
 
