@@ -1,27 +1,27 @@
-package br.gohan.deliveryapp
+package br.gohan.deliveryapp.presenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.gohan.deliveryapp.data.DeliveryRepository
 import data.model.Driver
 import data.model.Order
-import data.model.Orders
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DeliveryViewModel : ViewModel() {
-    private val repository = DeliveryRepository()
+class DeliveryViewModel(
+    private val repository: DeliveryRepository
+) : ViewModel() {
 
-    private val _orders = MutableStateFlow<Orders>(Orders(listOf()))
+    private val _orders = MutableStateFlow<List<Order>>(listOf())
     val orders = _orders.asStateFlow()
 
     private val _acceptOrder = MutableSharedFlow<Order>()
     val acceptOrder = _acceptOrder.asSharedFlow()
 
     init {
-        repository.setHttpClient()
         observeNewOrders()
     }
 

@@ -1,0 +1,20 @@
+CREATE TABLE Orders (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    pizzas TEXT NOT NULL, -- JSON
+    address TEXT,
+    addressPosition TEXT NOT NULL, -- JSON
+    driverResponsible TEXT, -- JSON
+    estimatedTime TEXT,
+    deliveryFee TEXT
+);
+
+insert:
+INSERT INTO Orders (pizzas, address, addressPosition, driverResponsible, estimatedTime, deliveryFee)
+VALUES ( ?,  ?, ?, ?, ?, ?);
+
+select:
+SELECT * FROM Orders LIMIT 1;
+
+delete:
+DELETE FROM Orders;
+

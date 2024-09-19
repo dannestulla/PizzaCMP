@@ -1,4 +1,4 @@
-package br.gohan.deliveryapp
+package br.gohan.deliveryapp.presenter
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import br.gohan.deliveryapp.orders
 import data.model.Order
 import presentation.ui.theme.Dimens
 import presentation.ui.theme.PizzaTheme
@@ -43,7 +44,7 @@ fun DeliveryCard(order: Order, action: (Order) -> Unit) {
             ) {
                 Column(Modifier.padding(start = 16.dp, bottom = 6.dp, top = 6.dp)) {
                     Text(
-                        order.address ?: "Sem endereço, TODO",
+                        order.address,
                         fontSize = Dimens.fontLarge,
                         fontWeight = FontWeight.Bold
                     )

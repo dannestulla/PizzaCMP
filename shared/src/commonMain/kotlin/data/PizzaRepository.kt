@@ -19,5 +19,5 @@ interface PizzaRepository {
 
     suspend fun getMessages(): Flow<NewMessage>
 
-    suspend fun sendOrder(selectionUi: Order)
+    suspend fun sendOrder(selectionUi: Order, acceptedOrder: (Order) -> Unit)
 }

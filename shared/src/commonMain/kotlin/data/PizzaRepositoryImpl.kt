@@ -36,8 +36,10 @@ class PizzaRepositoryImpl(
         return remoteDataSource.getMessages()
     }
 
-    override suspend fun sendOrder(selectionUi: Order) {
-        remoteDataSource.sendOrder(selectionUi)
+    override suspend fun sendOrder(selectionUi: Order, acceptedOrder: (Order) -> Unit) {
+        remoteDataSource.sendOrder(selectionUi) { order ->
+            localDataSource.saveOrder(order)
+        }
     }
 
 }

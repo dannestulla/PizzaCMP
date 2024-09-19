@@ -55,7 +55,9 @@ class CheckoutViewModel(
 
     fun sendOrder(selectionUi: List<PizzaSelected>) {
         viewModelScope.launch {
-            repository.sendOrder(selectionUi.toOrder(mockedGPSPosition))
+            repository.sendOrder(selectionUi.toOrder(mockedGPSPosition)) {
+
+            }
         }
     }
 }

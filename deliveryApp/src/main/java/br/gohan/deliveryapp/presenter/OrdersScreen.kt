@@ -1,4 +1,4 @@
-package br.gohan.deliveryapp
+package br.gohan.deliveryapp.presenter
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,15 +14,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import data.model.Order
-import data.model.Orders
+import org.koin.androidx.compose.koinViewModel
 import presentation.ui.theme.Dimens
 
 @Composable
 fun OrdersScreen(
     innerPadding: PaddingValues,
-    viewModel: DeliveryViewModel = viewModel()
+    viewModel: DeliveryViewModel = koinViewModel()
 ) {
     val orders by viewModel.orders.collectAsStateWithLifecycle()
     OrdersScreenStateless(innerPadding, orders) { order ->
@@ -34,11 +33,10 @@ fun OrdersScreen(
 @Composable
 fun OrdersScreenStateless(
     innerPadding: PaddingValues = PaddingValues(),
-    ordersGroup: Orders,
+    orders: List<Order>,
     modifier: Modifier = Modifier,
     acceptOrder: (Order) -> Unit,
 ) {
-    val orders = ordersGroup.orders
     Column(
         modifier = Modifier
             .fillMaxSize()

@@ -2,10 +2,10 @@ package data.model
 
 import kotlinx.serialization.Serializable
 
-@Serializable
+/*@Serializable
 data class Orders(
     val orders: List<Order>
-)
+)*/
 
 @Serializable
 data class Order(
