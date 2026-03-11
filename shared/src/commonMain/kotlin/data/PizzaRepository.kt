@@ -1,23 +1,27 @@
 package data
 
-import data.model.Order
-import data.model.PizzaProduct
-import data.model.PizzaSelected
+import data.model.Driver
+import data.model.MapDirections
+import data.model.Message
 import database.Checkout
 import kotlinx.coroutines.flow.Flow
-import presentation.model.NewMessage
+import presentation.model.PizzaProductUi
 
 interface PizzaRepository {
 
-    suspend fun getProducts(): List<PizzaProduct>
+    suspend fun getProducts(): List<PizzaProductUi>
 
     suspend fun getCheckoutItems(): Flow<List<Checkout>>
 
-    suspend fun saveCheckoutItem(item: PizzaSelected)
+    suspend fun saveCheckoutItem(item: PizzaProductUi)
 
-    suspend fun deleteCheckoutItem(item: PizzaSelected)
+    suspend fun deleteCheckoutItem(item: PizzaProductUi)
 
-    suspend fun getMessages(): Flow<NewMessage>
+    suspend fun getDriver(): Driver
 
-    suspend fun sendOrder(selectionUi: Order, acceptedOrder: (Order) -> Unit)
+    suspend fun getMapDirections(): MapDirections
+
+    suspend fun getMessages(): Flow<Message>
+
+    suspend fun sendOrder(selectionUi: List<PizzaProductUi>)
 }

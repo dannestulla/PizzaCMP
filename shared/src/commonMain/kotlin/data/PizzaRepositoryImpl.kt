@@ -1,22 +1,20 @@
 package data
 
 import data.local.LocalDataSource
-import data.model.Order
-import data.model.PizzaProduct
-import data.model.PizzaSelected
+import data.model.Driver
+import data.model.MapDirections
+import data.model.Message
 import data.remote.RemoteDataSource
 import database.Checkout
 import kotlinx.coroutines.flow.Flow
-import presentation.model.NewMessage
+import presentation.model.PizzaProductUi
 
 
 class PizzaRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : PizzaRepository {
-
-
-    override suspend fun getProducts(): List<PizzaProduct> {
+    override suspend fun getProducts(): List<PizzaProductUi> {
         return remoteDataSource.getProducts()
     }
 
@@ -24,22 +22,28 @@ class PizzaRepositoryImpl(
         return localDataSource.getItems()
     }
 
-    override suspend fun saveCheckoutItem(item: PizzaSelected) {
+    override suspend fun saveCheckoutItem(item: PizzaProductUi) {
         localDataSource.saveItem(item)
     }
 
-    override suspend fun deleteCheckoutItem(item: PizzaSelected) {
+    override suspend fun deleteCheckoutItem(item: PizzaProductUi) {
         localDataSource.deleteItem(item.name)
     }
 
-    override suspend fun getMessages(): Flow<NewMessage> {
+    override suspend fun getDriver(): Driver {
+        return remoteDataSource.getDriver()
+    }
+
+    override suspend fun getMapDirections(): MapDirections {
+        return remoteDataSource.getMapDirections()
+    }
+
+    override suspend fun getMessages(): Flow<Message> {
         return remoteDataSource.getMessages()
     }
 
-    override suspend fun sendOrder(selectionUi: Order, acceptedOrder: (Order) -> Unit) {
-        remoteDataSource.sendOrder(selectionUi) { order ->
-            localDataSource.saveOrder(order)
-        }
+    override suspend fun sendOrder(selectionUi: List<PizzaProductUi>) {
+        remoteDataSource.sendOrder(selectionUi)
     }
 
 }

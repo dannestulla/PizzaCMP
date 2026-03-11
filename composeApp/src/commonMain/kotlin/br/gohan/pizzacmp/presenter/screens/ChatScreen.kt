@@ -17,22 +17,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import br.gohan.pizzacmp.Dimens
 import br.gohan.pizzacmp.presenter.components.ButtonSecondary
 import br.gohan.pizzacmp.presenter.components.ChatBalloonMe
 import br.gohan.pizzacmp.presenter.components.ChatBalloonSomeone
-import org.koin.compose.viewmodel.koinViewModel
-import presentation.model.NewMessage
-import presentation.ui.theme.Dimens
-import presentation.viewmodels.ChatViewModel
+import org.koin.compose.koinInject
+import presentation.ChatViewModel
+import presentation.model.MessageUi
 
 @Composable
 fun ChatScreen(
     paddingValues: PaddingValues,
-    viewModel: ChatViewModel = koinViewModel(),
+    viewModel: ChatViewModel = koinInject(),
     back: () -> Unit
 ) {
-    val newMessage by viewModel.state.collectAsStateWithLifecycle(NewMessage.Mine("Teste", "213"))
-    val messages = remember { mutableStateListOf<NewMessage>() }
+    val newMessage by viewModel.state.collectAsStateWithLifecycle(MessageUi.Mine("Teste", "213"))
+    val messages = remember { mutableStateListOf<MessageUi>() }
 
     LaunchedEffect(Unit) {
         viewModel.getMessages()
@@ -47,7 +47,7 @@ fun ChatScreen(
 
 @Composable
 fun ChatScreenStateless(
-    messages: List<NewMessage>?,
+    messages: List<MessageUi>?,
     paddingValues: PaddingValues,
     back: () -> Unit
 ) {
@@ -66,19 +66,15 @@ fun ChatScreenStateless(
         Spacer(modifier = Modifier.height(20.dp))
         messages?.forEach { message ->
             when (message) {
-                is NewMessage.Someone -> ChatBalloonSomeone(
+                is MessageUi.Someone -> ChatBalloonSomeone(
                     modifier = Modifier.align(alignment = Alignment.Start),
                     message = message
                 )
 
-                is NewMessage.Mine -> ChatBalloonMe(
+                is MessageUi.Mine -> ChatBalloonMe(
                     modifier = Modifier.align(alignment = Alignment.End),
                     message = message
                 )
-
-                is NewMessage.AcceptOrder -> {
-
-                }
             }
         }
         Spacer(modifier = Modifier.weight(1f))
