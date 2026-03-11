@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/dannn/IdeaProjects/PizzaCMP -type f -name \"*.kt\" | xargs grep -l \"data class MapDirections\" 2>/dev/null)",
+      "Bash(git add:*)",
+      "Bash(dont need to manage git, let me do it)"
+    ]
+  }
+}

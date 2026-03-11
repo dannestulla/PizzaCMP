@@ -3,7 +3,7 @@ package data.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Driver(
-    val name: String,
-    val image: String
+data class Message(
+    val text: String,
+    val date: String
 )
